@@ -11,37 +11,23 @@
       box-sizing: border-box;
     }
 
+    html,
     body {
       margin: 0;
+      padding: 0;
       background: #000;
-      color: #fff;
+      min-height: 100%;
+    }
+
+    body {
+      overflow-x: hidden;
       font-family: Arial, Helvetica, sans-serif;
-      min-height: 100vh;
     }
 
-    header {
-      padding: 30px;
-      text-align: center;
-    }
-
-    header h1 {
-      margin: 0;
-      font-size: 28px;
-      font-weight: 400;
-      letter-spacing: 3px;
-      text-transform: uppercase;
-    }
-
-    .subtitle {
-      margin-top: 8px;
-      color: #888;
-      font-size: 12px;
-      letter-spacing: 2px;
-    }
-
+    /* Artwork grid */
     .grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
       gap: 2px;
       padding: 2px;
     }
@@ -57,61 +43,71 @@
     .artwork img {
       width: 100%;
       height: 100%;
-      object-fit: cover;
       display: block;
+      object-fit: cover;
       transition: transform 0.4s ease, opacity 0.4s ease;
     }
 
     .artwork:hover img {
-      transform: scale(1.04);
-      opacity: 0.75;
+      transform: scale(1.03);
+      opacity: 0.8;
     }
 
-    .info {
+    /* Current song information */
+    .song-info {
       position: fixed;
-      left: 30px;
-      bottom: 100px;
-      width: 300px;
-      padding: 20px;
-      background: rgba(0, 0, 0, 0.88);
-      border: 1px solid #333;
-      display: none;
+      left: 24px;
+      bottom: 90px;
       z-index: 10;
+
+      display: none;
+
+      color: white;
+      background: rgba(0, 0, 0, 0.85);
+      padding: 14px 18px;
+
+      max-width: 300px;
     }
 
-    .info.visible {
+    .song-info.visible {
       display: block;
     }
 
-    .info h2 {
-      margin: 0 0 6px;
-      font-size: 18px;
+    .song-title {
+      font-size: 16px;
+      margin: 0 0 4px;
       font-weight: 400;
     }
 
-    .info p {
+    .song-artist {
+      font-size: 12px;
       margin: 0;
-      color: #888;
-      font-size: 13px;
+      color: #999;
     }
 
+    /* Audio player */
     audio {
       position: fixed;
       left: 0;
       bottom: 0;
+
       width: 100%;
       z-index: 20;
     }
 
+    /* Mobile */
     @media (max-width: 600px) {
+
       .grid {
         grid-template-columns: repeat(2, 1fr);
+        gap: 2px;
+        padding: 2px;
       }
 
-      .info {
-        left: 15px;
-        bottom: 85px;
-        width: calc(100% - 30px);
+      .song-info {
+        left: 12px;
+        bottom: 80px;
+        max-width: calc(100% - 24px);
       }
     }
   </style>
@@ -119,113 +115,128 @@
 
 <body>
 
-  <header>
-    <h1>The Audio Aesthetic</h1>
-    <div class="subtitle">A collection of sound</div>
-  </header>
-
+  <!-- Artwork -->
   <main class="grid" id="musicGrid"></main>
 
-  <div class="info" id="songInfo">
-    <h2 id="songTitle"></h2>
-    <p id="songArtist"></p>
+  <!-- Song information -->
+  <div class="song-info" id="songInfo">
+    <p class="song-title" id="songTitle"></p>
+    <p class="song-artist" id="songArtist"></p>
   </div>
 
+  <!-- Music player -->
   <audio id="player" controls></audio>
+
 
   <script>
 
     /*
-      ADD YOUR MUSIC HERE
+    ==========================================================
+    THE AUDIO AESTHETIC — MUSIC LIBRARY
+    ==========================================================
 
-      Each song needs:
-      title
-      artist
-      artwork
-      audio
+    Add every song here.
 
-      Example:
+    Example:
 
-      {
-        title: "My Song",
-        artist: "My Name",
-        artwork: "artwork/mysong.jpg",
-        audio: "music/mysong.mp3"
-      }
+    {
+      title: "Song Name",
+      artist: "Artist Name",
+      artwork: "https://media.theaudioaesthetic.com/artwork/SongName.jpg",
+      audio: "https://media.theaudioaesthetic.com/music/SongName.mp3"
+    }
+
+    ==========================================================
     */
 
+
     const songs = [
-      {
-        title: "Example One",
-        artist: "The Audio Aesthetic",
-        artwork: "https://images.unsplash.com/photo-1511379938547-c1f69419868d?w=800",
-        audio: ""
-      },
 
       {
-        title: "Example Two",
-        artist: "The Audio Aesthetic",
-        artwork: "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=800",
-        audio: ""
-      },
-
-      {
-        title: "Example Three",
-        artist: "The Audio Aesthetic",
-        artwork: "https://images.unsplash.com/photo-1524368535928-5b5e00ddc76b?w=800",
-        audio: ""
-      },
-
-      {
-        title: "Example Four",
-        artist: "The Audio Aesthetic",
-        artwork: "https://images.unsplash.com/photo-1506157786151-b8491531f063?w=800",
-        audio: ""
+        title: "SaveMe",
+        artist: "YOUR ARTIST NAME",
+        artwork: "https://media.theaudioaesthetic.com/artwork/SaveMe.jpg",
+        audio: "https://media.theaudioaesthetic.com/music/SaveMe.mp3"
       }
+
     ];
 
 
+    /*
+    ==========================================================
+    SHUFFLE
+    ==========================================================
+    */
+
+    const shuffledSongs = [...songs];
+
+    for (let i = shuffledSongs.length - 1; i > 0; i--) {
+
+      const j = Math.floor(Math.random() * (i + 1));
+
+      [shuffledSongs[i], shuffledSongs[j]] =
+      [shuffledSongs[j], shuffledSongs[i]];
+
+    }
+
+
+    /*
+    ==========================================================
+    ELEMENTS
+    ==========================================================
+    */
+
     const grid = document.getElementById("musicGrid");
+
     const player = document.getElementById("player");
+
     const songInfo = document.getElementById("songInfo");
+
     const songTitle = document.getElementById("songTitle");
+
     const songArtist = document.getElementById("songArtist");
 
 
-    // Shuffle the artwork every time the page loads
-    const shuffledSongs = [...songs].sort(() => Math.random() - 0.5);
+    /*
+    ==========================================================
+    CREATE ARTWORK
+    ==========================================================
+    */
 
-
-    // Create artwork
     shuffledSongs.forEach(song => {
 
       const artwork = document.createElement("div");
 
       artwork.className = "artwork";
 
+
       artwork.innerHTML = `
-        <img src="${song.artwork}" alt="${song.title}">
+        <img
+          src="${song.artwork}"
+          alt="${song.title}"
+          loading="lazy"
+        >
       `;
 
 
-      // Play song when artwork is clicked
-      artwork.addEventListener("click", () => {
+      /*
+      ========================================================
+      CLICK ARTWORK
+      ========================================================
+      */
 
-        if (!song.audio) {
-          songTitle.textContent = song.title;
-          songArtist.textContent = song.artist + " — audio coming soon";
-          songInfo.classList.add("visible");
-          return;
-        }
+      artwork.addEventListener("click", () => {
 
         player.src = song.audio;
 
         songTitle.textContent = song.title;
+
         songArtist.textContent = song.artist;
 
         songInfo.classList.add("visible");
 
         player.play();
+
       });
 
 
