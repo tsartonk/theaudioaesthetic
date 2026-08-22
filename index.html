@@ -97,18 +97,14 @@
 
     .song-title {
       font-size: 13px;
-
       margin: 0 0 4px;
-
       font-weight: 400;
     }
 
 
     .song-artist {
       font-size: 10px;
-
       margin: 0;
-
       color: #777;
     }
 
@@ -158,7 +154,6 @@
 
     .player button:hover {
       opacity: 1;
-
       transform: scale(1.08);
     }
 
@@ -169,12 +164,11 @@
 
 
     /* =====================================================
-       ALBUM TRACKLIST OVERLAY
+       ALBUM OVERLAY
        ===================================================== */
 
     .album-overlay {
       position: fixed;
-
       inset: 0;
 
       background: rgba(0, 0, 0, 0.94);
@@ -201,7 +195,6 @@
 
     .album-panel {
       width: 100%;
-
       max-width: 500px;
 
       color: white;
@@ -464,6 +457,7 @@
             id="albumTitle">
           </h2>
 
+
           <p
             id="albumArtist">
           </p>
@@ -511,7 +505,9 @@
   </div>
 
 
-  <!-- Hidden audio engine -->
+  <!-- =====================================================
+       AUDIO ENGINE
+       ===================================================== -->
 
   <audio
     id="player"
@@ -617,7 +613,7 @@
 
 
     /* =====================================================
-       SHUFFLE LIBRARY
+       SHUFFLE ARTWORK
        ===================================================== */
 
     const shuffledLibrary =
@@ -730,11 +726,19 @@
       );
 
 
+    /* =====================================================
+       PLAYER STATE
+       ===================================================== */
+
     let currentSong = null;
+
+    let currentAlbum = null;
+
+    let currentTrackIndex = -1;
 
 
     /* =====================================================
-       FORMAT ARTISTS
+       FORMAT ARTIST NAME
        ===================================================== */
 
     function formatArtists(
@@ -769,7 +773,9 @@
       title,
       artist,
       audio,
-      features = []
+      features = [],
+      album = null,
+      trackIndex = -1
     ) {
 
       currentSong = {
@@ -783,6 +789,14 @@
         features
 
       };
+
+
+      currentAlbum =
+        album;
+
+
+      currentTrackIndex =
+        trackIndex;
 
 
       player.src =
@@ -815,7 +829,7 @@
 
 
     /* =====================================================
-       CREATE GRID
+       CREATE ARTWORK GRID
        ===================================================== */
 
     shuffledLibrary.forEach(
@@ -982,7 +996,6 @@
             "click",
             () => {
 
-
               playSong(
 
                 track.title,
@@ -991,7 +1004,11 @@
 
                 track.audio,
 
-                track.features
+                track.features,
+
+                album,
+
+                index
 
               );
 
@@ -1017,7 +1034,9 @@
       );
 
 
-      /* Automatically start Track 1 */
+      /* =================================================
+         START ALBUM AT TRACK 1
+         ================================================= */
 
       const firstTrack =
         album.tracks[0];
@@ -1031,7 +1050,11 @@
 
         firstTrack.audio,
 
-        firstTrack.features
+        firstTrack.features,
+
+        album,
+
+        0
 
       );
 
@@ -1113,6 +1136,97 @@
 
 
     /* =====================================================
+       AUTOMATIC ALBUM PROGRESSION
+       ===================================================== */
+
+    player.addEventListener(
+      "ended",
+      () => {
+
+
+        /* -----------------------------------------------
+           If we're playing an album
+           ----------------------------------------------- */
+
+        if (
+          currentAlbum &&
+          currentTrackIndex >= 0
+        ) {
+
+
+          const nextTrackIndex =
+            currentTrackIndex + 1;
+
+
+          /* ---------------------------------------------
+             There is another song
+             --------------------------------------------- */
+
+          if (
+            nextTrackIndex <
+            currentAlbum.tracks.length
+          ) {
+
+
+            const nextTrack =
+              currentAlbum.tracks[
+                nextTrackIndex
+              ];
+
+
+            playSong(
+
+              nextTrack.title,
+
+              currentAlbum.artist,
+
+              nextTrack.audio,
+
+              nextTrack.features,
+
+              currentAlbum,
+
+              nextTrackIndex
+
+            );
+
+
+            return;
+
+          }
+
+
+          /* ---------------------------------------------
+             Album is finished
+             --------------------------------------------- */
+
+          currentAlbum =
+            null;
+
+          currentTrackIndex =
+            -1;
+
+          playButton.textContent =
+            "▶";
+
+
+          return;
+
+        }
+
+
+        /* -----------------------------------------------
+           Single is finished
+           ----------------------------------------------- */
+
+        playButton.textContent =
+          "▶";
+
+      }
+    );
+
+
+    /* =====================================================
        PLAYER STATE
        ===================================================== */
 
@@ -1133,21 +1247,6 @@
 
         playButton.textContent =
           "▶";
-
-      }
-    );
-
-
-    player.addEventListener(
-      "ended",
-      () => {
-
-        if (!player.loop) {
-
-          playButton.textContent =
-            "▶";
-
-        }
 
       }
     );
