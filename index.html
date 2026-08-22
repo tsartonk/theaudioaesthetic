@@ -7,38 +7,111 @@
   <title>The Audio Aesthetic</title>
 
   <style>
+    * {
+      box-sizing: border-box;
+    }
+
     body {
       margin: 0;
-      background: #111;
+      background: #000;
       color: #fff;
-      font-family: Arial, sans-serif;
+      font-family: Arial, Helvetica, sans-serif;
+      min-height: 100vh;
     }
 
-    .library {
+    header {
+      padding: 30px;
+      text-align: center;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 28px;
+      font-weight: 400;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+    }
+
+    .subtitle {
+      margin-top: 8px;
+      color: #888;
+      font-size: 12px;
+      letter-spacing: 2px;
+    }
+
+    .grid {
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 8px;
-      padding: 8px;
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      gap: 2px;
+      padding: 2px;
     }
 
-    .album {
+    .artwork {
+      position: relative;
+      aspect-ratio: 1 / 1;
+      overflow: hidden;
       cursor: pointer;
+      background: #111;
     }
 
-    .album img {
+    .artwork img {
       width: 100%;
-      aspect-ratio: 1;
+      height: 100%;
       object-fit: cover;
       display: block;
+      transition: transform 0.4s ease, opacity 0.4s ease;
     }
 
-    .album img:hover {
+    .artwork:hover img {
+      transform: scale(1.04);
       opacity: 0.75;
     }
 
-    @media (max-width: 700px) {
-      .library {
+    .info {
+      position: fixed;
+      left: 30px;
+      bottom: 100px;
+      width: 300px;
+      padding: 20px;
+      background: rgba(0, 0, 0, 0.88);
+      border: 1px solid #333;
+      display: none;
+      z-index: 10;
+    }
+
+    .info.visible {
+      display: block;
+    }
+
+    .info h2 {
+      margin: 0 0 6px;
+      font-size: 18px;
+      font-weight: 400;
+    }
+
+    .info p {
+      margin: 0;
+      color: #888;
+      font-size: 13px;
+    }
+
+    audio {
+      position: fixed;
+      left: 0;
+      bottom: 0;
+      width: 100%;
+      z-index: 20;
+    }
+
+    @media (max-width: 600px) {
+      .grid {
         grid-template-columns: repeat(2, 1fr);
+      }
+
+      .info {
+        left: 15px;
+        bottom: 85px;
+        width: calc(100% - 30px);
       }
     }
   </style>
@@ -46,17 +119,121 @@
 
 <body>
 
-  <main class="library">
+  <header>
+    <h1>The Audio Aesthetic</h1>
+    <div class="subtitle">A collection of sound</div>
+  </header>
 
-    <div class="album">
-      <img src="assets/all-love.jpg" alt="All Love">
-    </div>
+  <main class="grid" id="musicGrid"></main>
 
-    <div class="album">
-      <img src="assets/green-cover.jpg" alt="Untitled">
-    </div>
+  <div class="info" id="songInfo">
+    <h2 id="songTitle"></h2>
+    <p id="songArtist"></p>
+  </div>
 
-  </main>
+  <audio id="player" controls></audio>
+
+  <script>
+
+    /*
+      ADD YOUR MUSIC HERE
+
+      Each song needs:
+      title
+      artist
+      artwork
+      audio
+
+      Example:
+
+      {
+        title: "My Song",
+        artist: "My Name",
+        artwork: "artwork/mysong.jpg",
+        audio: "music/mysong.mp3"
+      }
+    */
+
+    const songs = [
+      {
+        title: "Example One",
+        artist: "The Audio Aesthetic",
+        artwork: "https://images.unsplash.com/photo-1511379938547-c1f69419868d?w=800",
+        audio: ""
+      },
+
+      {
+        title: "Example Two",
+        artist: "The Audio Aesthetic",
+        artwork: "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=800",
+        audio: ""
+      },
+
+      {
+        title: "Example Three",
+        artist: "The Audio Aesthetic",
+        artwork: "https://images.unsplash.com/photo-1524368535928-5b5e00ddc76b?w=800",
+        audio: ""
+      },
+
+      {
+        title: "Example Four",
+        artist: "The Audio Aesthetic",
+        artwork: "https://images.unsplash.com/photo-1506157786151-b8491531f063?w=800",
+        audio: ""
+      }
+    ];
+
+
+    const grid = document.getElementById("musicGrid");
+    const player = document.getElementById("player");
+    const songInfo = document.getElementById("songInfo");
+    const songTitle = document.getElementById("songTitle");
+    const songArtist = document.getElementById("songArtist");
+
+
+    // Shuffle the artwork every time the page loads
+    const shuffledSongs = [...songs].sort(() => Math.random() - 0.5);
+
+
+    // Create artwork
+    shuffledSongs.forEach(song => {
+
+      const artwork = document.createElement("div");
+
+      artwork.className = "artwork";
+
+      artwork.innerHTML = `
+        <img src="${song.artwork}" alt="${song.title}">
+      `;
+
+
+      // Play song when artwork is clicked
+      artwork.addEventListener("click", () => {
+
+        if (!song.audio) {
+          songTitle.textContent = song.title;
+          songArtist.textContent = song.artist + " — audio coming soon";
+          songInfo.classList.add("visible");
+          return;
+        }
+
+        player.src = song.audio;
+
+        songTitle.textContent = song.title;
+        songArtist.textContent = song.artist;
+
+        songInfo.classList.add("visible");
+
+        player.play();
+      });
+
+
+      grid.appendChild(artwork);
+
+    });
+
+  </script>
 
 </body>
 </html>
