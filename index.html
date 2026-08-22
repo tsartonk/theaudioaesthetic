@@ -24,7 +24,10 @@
       font-family: Arial, Helvetica, sans-serif;
     }
 
-    /* Artwork grid */
+    /* =========================
+       ARTWORK GRID
+       ========================= */
+
     .grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
@@ -53,20 +56,25 @@
       opacity: 0.8;
     }
 
-    /* Current song information */
+
+    /* =========================
+       SONG INFO
+       ========================= */
+
     .song-info {
       position: fixed;
-      left: 24px;
-      bottom: 90px;
-      z-index: 10;
+      left: 50%;
+      bottom: 72px;
+      transform: translateX(-50%);
 
       display: none;
 
+      text-align: center;
       color: white;
-      background: rgba(0, 0, 0, 0.85);
-      padding: 14px 18px;
 
-      max-width: 300px;
+      z-index: 10;
+
+      pointer-events: none;
     }
 
     .song-info.visible {
@@ -74,28 +82,71 @@
     }
 
     .song-title {
-      font-size: 16px;
+      font-size: 13px;
       margin: 0 0 4px;
       font-weight: 400;
     }
 
     .song-artist {
-      font-size: 12px;
+      font-size: 10px;
       margin: 0;
-      color: #999;
+      color: #777;
     }
 
-    /* Audio player */
-    audio {
-      position: fixed;
-      left: 0;
-      bottom: 0;
 
-      width: 100%;
+    /* =========================
+       MINIMAL PLAYER
+       ========================= */
+
+    .player {
+      position: fixed;
+
+      left: 50%;
+      bottom: 22px;
+
+      transform: translateX(-50%);
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      gap: 20px;
+
       z-index: 20;
     }
 
-    /* Mobile */
+    .player button {
+      border: none;
+      background: none;
+
+      color: #fff;
+
+      font-size: 14px;
+
+      cursor: pointer;
+
+      padding: 4px;
+
+      opacity: 0.65;
+
+      transition: opacity 0.2s ease,
+                  transform 0.2s ease;
+    }
+
+    .player button:hover {
+      opacity: 1;
+      transform: scale(1.08);
+    }
+
+    .play-button {
+      font-size: 18px !important;
+    }
+
+
+    /* =========================
+       MOBILE
+       ========================= */
+
     @media (max-width: 600px) {
 
       .grid {
@@ -104,138 +155,207 @@
         padding: 2px;
       }
 
-      .song-info {
-        left: 12px;
-        bottom: 80px;
-        max-width: calc(100% - 24px);
+      .player {
+        bottom: 18px;
       }
+
+      .song-info {
+        bottom: 62px;
+      }
+
     }
+
   </style>
 </head>
 
+
 <body>
 
-  <!-- Artwork -->
+
+  <!-- =========================
+       ARTWORK
+       ========================= -->
+
   <main class="grid" id="musicGrid"></main>
 
-  <!-- Song information -->
+
+  <!-- =========================
+       SONG INFO
+       ========================= -->
+
   <div class="song-info" id="songInfo">
-    <p class="song-title" id="songTitle"></p>
-    <p class="song-artist" id="songArtist"></p>
+
+    <p
+      class="song-title"
+      id="songTitle">
+    </p>
+
+    <p
+      class="song-artist"
+      id="songArtist">
+    </p>
+
   </div>
 
-  <!-- Music player -->
-  <audio id="player" controls></audio>
+
+  <!-- =========================
+       MINIMAL PLAYER
+       ========================= -->
+
+  <div class="player">
+
+    <button
+      id="repeatButton"
+      title="Repeat">
+      ↻
+    </button>
+
+    <button
+      id="playButton"
+      class="play-button"
+      title="Play / Pause">
+      ▶
+    </button>
+
+  </div>
+
+
+  <!-- Hidden audio engine -->
+
+  <audio
+    id="player"
+    preload="metadata">
+  </audio>
 
 
   <script>
 
-    /*
-    ==========================================================
-    THE AUDIO AESTHETIC — MUSIC LIBRARY
-    ==========================================================
 
-    Add every song here.
-
-    Example:
-
-    {
-      title: "Song Name",
-      artist: "Artist Name",
-      artwork: "https://media.theaudioaesthetic.com/artwork/SongName.jpg",
-      audio: "https://media.theaudioaesthetic.com/music/SongName.mp3"
-    }
-
-    ==========================================================
-    */
+    /* ======================================================
+       MUSIC LIBRARY
+       ====================================================== */
 
 
     const songs = [
 
       {
         title: "SaveMe",
-        artist: "YOUR ARTIST NAME",
-        artwork: "https://media.theaudioaesthetic.com/artwork/SaveMe.jpg",
-        audio: "https://media.theaudioaesthetic.com/music/SaveMe.mp3"
+
+        artist: "ToNk (ft. Don'o)",
+
+        artwork:
+          "https://media.theaudioaesthetic.com/artwork/SaveMe.jpg",
+
+        audio:
+          "https://media.theaudioaesthetic.com/music/SaveMe.mp3"
       }
 
     ];
 
 
-    /*
-    ==========================================================
-    SHUFFLE
-    ==========================================================
-    */
+    /* ======================================================
+       SHUFFLE
+       ====================================================== */
+
 
     const shuffledSongs = [...songs];
 
-    for (let i = shuffledSongs.length - 1; i > 0; i--) {
+    for (
+      let i = shuffledSongs.length - 1;
+      i > 0;
+      i--
+    ) {
 
-      const j = Math.floor(Math.random() * (i + 1));
+      const j =
+        Math.floor(Math.random() * (i + 1));
 
-      [shuffledSongs[i], shuffledSongs[j]] =
-      [shuffledSongs[j], shuffledSongs[i]];
+      [
+        shuffledSongs[i],
+        shuffledSongs[j]
+      ] =
+      [
+        shuffledSongs[j],
+        shuffledSongs[i]
+      ];
 
     }
 
 
-    /*
-    ==========================================================
-    ELEMENTS
-    ==========================================================
-    */
-
-    const grid = document.getElementById("musicGrid");
-
-    const player = document.getElementById("player");
-
-    const songInfo = document.getElementById("songInfo");
-
-    const songTitle = document.getElementById("songTitle");
-
-    const songArtist = document.getElementById("songArtist");
+    /* ======================================================
+       ELEMENTS
+       ====================================================== */
 
 
-    /*
-    ==========================================================
-    CREATE ARTWORK
-    ==========================================================
-    */
+    const grid =
+      document.getElementById("musicGrid");
+
+    const player =
+      document.getElementById("player");
+
+    const playButton =
+      document.getElementById("playButton");
+
+    const repeatButton =
+      document.getElementById("repeatButton");
+
+    const songInfo =
+      document.getElementById("songInfo");
+
+    const songTitle =
+      document.getElementById("songTitle");
+
+    const songArtist =
+      document.getElementById("songArtist");
+
+
+    let currentSong = null;
+
+
+    /* ======================================================
+       CREATE ARTWORK
+       ====================================================== */
+
 
     shuffledSongs.forEach(song => {
 
-      const artwork = document.createElement("div");
+      const artwork =
+        document.createElement("div");
 
       artwork.className = "artwork";
 
 
       artwork.innerHTML = `
+
         <img
           src="${song.artwork}"
           alt="${song.title}"
           loading="lazy"
         >
+
       `;
 
 
-      /*
-      ========================================================
-      CLICK ARTWORK
-      ========================================================
-      */
+      /* ================================================
+         CLICK ARTWORK
+         ================================================ */
 
       artwork.addEventListener("click", () => {
 
+        currentSong = song;
+
         player.src = song.audio;
 
-        songTitle.textContent = song.title;
+        songTitle.textContent =
+          song.title;
 
-        songArtist.textContent = song.artist;
+        songArtist.textContent =
+          song.artist;
 
         songInfo.classList.add("visible");
 
         player.play();
+
+        playButton.textContent = "❚❚";
 
       });
 
@@ -243,6 +363,87 @@
       grid.appendChild(artwork);
 
     });
+
+
+    /* ======================================================
+       PLAY / PAUSE
+       ====================================================== */
+
+
+    playButton.addEventListener("click", () => {
+
+      if (!currentSong) {
+        return;
+      }
+
+
+      if (player.paused) {
+
+        player.play();
+
+        playButton.textContent = "❚❚";
+
+      } else {
+
+        player.pause();
+
+        playButton.textContent = "▶";
+
+      }
+
+    });
+
+
+    /* ======================================================
+       REPEAT
+       ====================================================== */
+
+
+    repeatButton.addEventListener("click", () => {
+
+      player.loop =
+        !player.loop;
+
+      repeatButton.style.opacity =
+        player.loop ? "1" : "0.65";
+
+    });
+
+
+    /* ======================================================
+       UPDATE PLAY BUTTON
+       ====================================================== */
+
+
+    player.addEventListener("play", () => {
+
+      playButton.textContent = "❚❚";
+
+    });
+
+
+    player.addEventListener("pause", () => {
+
+      playButton.textContent = "▶";
+
+    });
+
+
+    /* ======================================================
+       WHEN SONG ENDS
+       ====================================================== */
+
+
+    player.addEventListener("ended", () => {
+
+      if (!player.loop) {
+
+        playButton.textContent = "▶";
+
+      }
+
+    });
+
 
   </script>
 
