@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>The Audio Aesthetic</title>
+
+  <style>
+    body {
+      margin: 0;
+      background: #111;
+      color: #fff;
+      font-family: Arial, sans-serif;
+    }
+
+    .library {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+      padding: 8px;
+    }
+
+    .album {
+      cursor: pointer;
+    }
+
+    .album img {
+      width: 100%;
+      aspect-ratio: 1;
+      object-fit: cover;
+      display: block;
+    }
+
+    .album img:hover {
+      opacity: 0.75;
+    }
+
+    @media (max-width: 700px) {
+      .library {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <main class="library">
+
+    <div class="album">
+      <img src="assets/all-love.jpg" alt="All Love">
+    </div>
+
+    <div class="album">
+      <img src="assets/green-cover.jpg" alt="Untitled">
+    </div>
+
+  </main>
+
+</body>
+</html>
