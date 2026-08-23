@@ -532,9 +532,11 @@
       {
         type: "single",
 
-        title: "SaveMe",
+        title: "Save Me",
 
-        artist: "ToNk (ft. Don'o)",
+        artist: "ToNk",
+
+        features: [Don'o],
 
         artwork:
           "https://media.theaudioaesthetic.com/artwork/SaveMe.jpg",
@@ -596,7 +598,7 @@
 
 
           {
-            title: "Boastin'",
+            title: "Boastin",
 
             features: [
               "PeriMaison"
@@ -607,6 +609,97 @@
           }
 
         ]
+      },
+
+
+      /* ===================================================
+         SINGLE — Do Our Own Thing
+         =================================================== */
+
+      {
+        type: "single",
+
+        title: "Do Our Own Thing",
+
+        artist: "Don'o",
+
+        features: [
+          "Drain",
+          "Jaz"
+        ],
+
+        artwork:
+          "https://media.theaudioaesthetic.com/artwork/DOOT.jpg",
+
+        audio:
+          "https://media.theaudioaesthetic.com/music/RashoudDrain%20x%20Don'O%20-%20DOT%20-%20RM2.mp3"
+      },
+
+
+      /* ===================================================
+         SINGLE — Hell Of A Life
+         =================================================== */
+
+      {
+        type: "single",
+
+        title: "Hell Of A Life",
+
+        artist: "Don'o",
+
+        features: [
+          "ToNk"
+        ],
+
+        artwork:
+          "https://media.theaudioaesthetic.com/artwork/HellOfALife.jpg",
+
+        audio:
+          "https://media.theaudioaesthetic.com/music/Don'o%20-%20HellOfALife%20-RM2.mp3"
+      },
+
+
+      /* ===================================================
+         SINGLE — GLORY [x2]
+         =================================================== */
+
+      {
+        type: "single",
+
+        title: "GLORY [x2]",
+
+        artist: "Jaź & Don'o",
+
+        features: [],
+
+        artwork:
+          "https://media.theaudioaesthetic.com/artwork/GLORYX2.jpg",
+
+        audio:
+          "https://media.theaudioaesthetic.com/music/Jaz%20x%20Don'O%20-%20GloryGlory.mp3"
+      },
+
+
+      /* ===================================================
+         SINGLE — Highs & Lows
+         =================================================== */
+
+      {
+        type: "single",
+
+        title: "Highs & Lows",
+
+        artist: "RETRO REW",
+
+        features: [
+          "ToNk"
+        ],
+
+        artwork:
+          "https://media.theaudioaesthetic.com/artwork/HIGHSANDLOWS.jpg",
+
+        audio:
+          "https://media.theaudioaesthetic.com/music/RetroREW%20-%20HIGHS%26LOWS.mp3"
       }
 
     ];
@@ -738,7 +831,7 @@
 
 
     /* =====================================================
-       FORMAT ARTIST NAME
+       FORMAT ARTISTS
        ===================================================== */
 
     function formatArtists(
@@ -781,11 +874,8 @@
       currentSong = {
 
         title,
-
         artist,
-
         audio,
-
         features
 
       };
@@ -874,7 +964,9 @@
 
                 item.artist,
 
-                item.audio
+                item.audio,
+
+                item.features
 
               );
 
@@ -1145,7 +1237,7 @@
 
 
         /* -----------------------------------------------
-           If we're playing an album
+           ALBUM PLAYBACK
            ----------------------------------------------- */
 
         if (
@@ -1159,7 +1251,7 @@
 
 
           /* ---------------------------------------------
-             There is another song
+             NEXT TRACK
              --------------------------------------------- */
 
           if (
@@ -1197,14 +1289,16 @@
 
 
           /* ---------------------------------------------
-             Album is finished
+             ALBUM FINISHED
              --------------------------------------------- */
 
           currentAlbum =
             null;
 
+
           currentTrackIndex =
             -1;
+
 
           playButton.textContent =
             "▶";
@@ -1216,7 +1310,7 @@
 
 
         /* -----------------------------------------------
-           Single is finished
+           SINGLE FINISHED
            ----------------------------------------------- */
 
         playButton.textContent =
