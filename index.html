@@ -25,10 +25,7 @@
       font-family: Arial, Helvetica, sans-serif;
     }
 
-
-    /* =====================================================
-       ARTWORK GRID
-       ===================================================== */
+    /* ARTWORK GRID */
 
     .grid {
       display: grid;
@@ -36,7 +33,6 @@
       gap: 2px;
       padding: 2px;
     }
-
 
     .artwork {
       position: relative;
@@ -46,54 +42,37 @@
       background: #111;
     }
 
-
     .artwork img {
       width: 100%;
       height: 100%;
       display: block;
       object-fit: cover;
-
-      transition:
-        transform 0.4s ease,
-        opacity 0.4s ease;
+      transition: transform 0.4s ease, opacity 0.4s ease;
     }
-
 
     .artwork:hover img {
       transform: scale(1.03);
       opacity: 0.8;
     }
 
-
-    /* =====================================================
-       SONG INFORMATION
-       ===================================================== */
+    /* SONG INFO */
 
     .song-info {
       position: fixed;
-
       left: 50%;
       bottom: 72px;
-
       transform: translateX(-50%);
-
       display: none;
-
       text-align: center;
       color: white;
-
       z-index: 10;
-
       pointer-events: none;
-
       white-space: nowrap;
     }
-
 
     .song-info.visible {
       display: block;
     }
-
 
     .song-title {
       font-size: 13px;
@@ -101,249 +80,160 @@
       font-weight: 400;
     }
 
-
     .song-artist {
       font-size: 10px;
       margin: 0;
       color: #777;
     }
 
-
-    /* =====================================================
-       MINIMAL PLAYER
-       ===================================================== */
+    /* MINIMAL PLAYER */
 
     .player {
       position: fixed;
-
       left: 50%;
       bottom: 22px;
-
       transform: translateX(-50%);
-
       display: flex;
-
       align-items: center;
       justify-content: center;
-
       gap: 20px;
-
       z-index: 30;
     }
-
 
     .player button {
       border: none;
       background: none;
-
       color: #fff;
-
       font-size: 14px;
-
       cursor: pointer;
-
       padding: 4px;
-
       opacity: 0.65;
-
-      transition:
-        opacity 0.2s ease,
-        transform 0.2s ease;
+      transition: opacity 0.2s ease, transform 0.2s ease;
     }
-
 
     .player button:hover {
       opacity: 1;
       transform: scale(1.08);
     }
 
-
     .play-button {
       font-size: 18px !important;
     }
 
-
-    /* =====================================================
-       ALBUM OVERLAY
-       ===================================================== */
+    /* ALBUM OVERLAY */
 
     .album-overlay {
       position: fixed;
       inset: 0;
-
       background: rgba(0, 0, 0, 0.94);
-
       z-index: 100;
-
       display: none;
-
       align-items: center;
       justify-content: center;
-
       padding: 30px;
+      overflow-y: auto;
     }
-
 
     .album-overlay.visible {
       display: flex;
     }
 
-
-    /* =====================================================
-       ALBUM PANEL
-       ===================================================== */
-
     .album-panel {
       width: 100%;
       max-width: 500px;
-
       color: white;
     }
 
-
     .album-header {
       display: flex;
-
       align-items: center;
-
       gap: 18px;
-
       margin-bottom: 28px;
     }
-
 
     .album-cover {
       width: 90px;
       height: 90px;
-
       object-fit: cover;
-
       flex-shrink: 0;
     }
 
-
     .album-details h2 {
       margin: 0 0 5px;
-
       font-size: 16px;
-
       font-weight: 400;
     }
 
-
     .album-details p {
       margin: 0;
-
       font-size: 11px;
-
       color: #777;
     }
 
-
-    /* =====================================================
-       TRACKLIST
-       ===================================================== */
+    /* TRACKLIST */
 
     .tracklist {
       border-top: 1px solid #222;
     }
 
-
     .track {
       display: flex;
-
       align-items: center;
-
       width: 100%;
-
       padding: 12px 4px;
-
       border: none;
-
       border-bottom: 1px solid #222;
-
       background: none;
-
       color: white;
-
       text-align: left;
-
       cursor: pointer;
-
       font-family: inherit;
-
       transition: opacity 0.2s ease;
     }
-
 
     .track:hover {
       opacity: 0.55;
     }
 
-
     .track-number {
       width: 35px;
-
       color: #555;
-
       font-size: 11px;
-
       flex-shrink: 0;
     }
 
-
     .track-title {
       font-size: 12px;
-
       flex: 1;
     }
 
-
     .track-feature {
       font-size: 10px;
-
       color: #777;
-
       margin-left: 10px;
-
       text-align: right;
     }
 
-
-    /* =====================================================
-       CLOSE BUTTON
-       ===================================================== */
+    /* CLOSE */
 
     .close-album {
       position: fixed;
-
       top: 22px;
       right: 26px;
-
       border: none;
-
       background: none;
-
       color: white;
-
       font-size: 20px;
-
       cursor: pointer;
-
       opacity: 0.6;
-
       z-index: 110;
     }
-
 
     .close-album:hover {
       opacity: 1;
     }
 
-
-    /* =====================================================
-       MOBILE
-       ===================================================== */
+    /* MOBILE */
 
     @media (max-width: 600px) {
 
@@ -353,27 +243,22 @@
         padding: 2px;
       }
 
-
       .player {
         bottom: 18px;
       }
-
 
       .song-info {
         bottom: 62px;
       }
 
-
       .album-overlay {
         padding: 20px;
       }
-
 
       .album-cover {
         width: 75px;
         height: 75px;
       }
-
 
       .track-feature {
         font-size: 9px;
@@ -384,60 +269,31 @@
   </style>
 </head>
 
-
 <body>
 
+  <!-- ARTWORK -->
 
-  <!-- =====================================================
-       ARTWORK GRID
-       ===================================================== -->
+  <main class="grid" id="musicGrid"></main>
 
-  <main
-    class="grid"
-    id="musicGrid">
-  </main>
+  <!-- SONG INFO -->
 
+  <div class="song-info" id="songInfo">
 
-  <!-- =====================================================
-       SONG INFORMATION
-       ===================================================== -->
+    <p class="song-title" id="songTitle"></p>
 
-  <div
-    class="song-info"
-    id="songInfo">
-
-    <p
-      class="song-title"
-      id="songTitle">
-    </p>
-
-    <p
-      class="song-artist"
-      id="songArtist">
-    </p>
+    <p class="song-artist" id="songArtist"></p>
 
   </div>
 
+  <!-- ALBUM -->
 
-  <!-- =====================================================
-       ALBUM TRACKLIST
-       ===================================================== -->
+  <div class="album-overlay" id="albumOverlay">
 
-  <div
-    class="album-overlay"
-    id="albumOverlay">
-
-    <button
-      class="close-album"
-      id="closeAlbum">
-
+    <button class="close-album" id="closeAlbum">
       ×
-
     </button>
 
-
     <div class="album-panel">
-
 
       <div class="album-header">
 
@@ -448,73 +304,44 @@
           alt=""
         >
 
-
         <div class="album-details">
 
-          <h2
-            id="albumTitle">
-          </h2>
+          <h2 id="albumTitle"></h2>
 
-
-          <p
-            id="albumArtist">
-          </p>
+          <p id="albumArtist"></p>
 
         </div>
 
       </div>
 
-
-      <div
-        class="tracklist"
-        id="tracklist">
-      </div>
-
+      <div class="tracklist" id="tracklist"></div>
 
     </div>
 
   </div>
 
-
-  <!-- =====================================================
-       MINIMAL PLAYER
-       ===================================================== -->
+  <!-- PLAYER -->
 
   <div class="player">
 
     <button
       id="repeatButton"
       title="Repeat">
-
       ↻
-
     </button>
-
 
     <button
       id="playButton"
       class="play-button"
       title="Play / Pause">
-
       ▶
-
     </button>
 
   </div>
 
-
-  <!-- =====================================================
-       AUDIO ENGINE
-       ===================================================== -->
-
-  <audio
-    id="player"
-    preload="metadata">
-  </audio>
-
+  <audio id="player" preload="metadata"></audio>
 
   <script>
-
 
     /* =====================================================
        MUSIC LIBRARY
@@ -522,10 +349,7 @@
 
     const library = [
 
-
-      /* ===================================================
-         SAVE ME
-         =================================================== */
+      /* SAVE ME */
 
       {
         type: "single",
@@ -546,9 +370,7 @@
       },
 
 
-      /* ===================================================
-         WWF — ALBUM
-         =================================================== */
+      /* WWF */
 
       {
         type: "album",
@@ -560,9 +382,7 @@
         artwork:
           "https://media.theaudioaesthetic.com/artwork/wwf.jpg",
 
-
         tracks: [
-
 
           {
             title: "First Down",
@@ -572,7 +392,6 @@
             audio:
               "https://media.theaudioaesthetic.com/music/WWF/01.%20ToNk%20-%20FirstDown%20-%20RM2.mp3"
           },
-
 
           {
             title: "10 Toes",
@@ -585,7 +404,6 @@
               "https://media.theaudioaesthetic.com/music/WWF/02.%20ToNk%20x%20TreyVaro%20-%2010Toes%20-%20RM3.mp3"
           },
 
-
           {
             title: "Toe To Toe",
 
@@ -596,7 +414,6 @@
             audio:
               "https://media.theaudioaesthetic.com/music/WWF/03.%20ToNk%20x%20Don'o%20-%20ToeToToe%20-%20RM1.mp3"
           },
-
 
           {
             title: "Boastin",
@@ -613,9 +430,7 @@
       },
 
 
-      /* ===================================================
-         DO OUR OWN THING
-         =================================================== */
+      /* DO OUR OWN THING */
 
       {
         type: "single",
@@ -636,9 +451,7 @@
       },
 
 
-      /* ===================================================
-         HELL OF A LIFE
-         =================================================== */
+      /* HELL OF A LIFE */
 
       {
         type: "single",
@@ -659,9 +472,7 @@
       },
 
 
-      /* ===================================================
-         GLORY [x2]
-         =================================================== */
+      /* GLORY [x2] */
 
       {
         type: "single",
@@ -680,9 +491,7 @@
       },
 
 
-      /* ===================================================
-         HIGHS & LOWS
-         =================================================== */
+      /* HIGHS & LOWS */
 
       {
         type: "single",
@@ -700,18 +509,253 @@
 
         audio:
           "https://media.theaudioaesthetic.com/music/RetroREW%20-%20HIGHS%26LOWS.mp3"
+      },
+
+
+      /* I BEEN */
+
+      {
+        type: "single",
+
+        title: "I Been",
+
+        artist: "ToNk",
+
+        features: [
+          "Cardell",
+          "King Tay"
+        ],
+
+        artwork:
+          "https://media.theaudioaesthetic.com/artwork/IBEEN.jpg",
+
+        audio:
+          "https://media.theaudioaesthetic.com/music/ToNk%20x%20Cardell%20x%20KingTay%20-%20IBeen%20-%20RM2.mp3"
+      },
+
+
+      /* FEEL THE HATE */
+
+      {
+        type: "single",
+
+        title: "Feel The Hate",
+
+        artist: "Don'o",
+
+        features: [
+          "ToNk"
+        ],
+
+        artwork:
+          "https://media.theaudioaesthetic.com/artwork/FEELTHEHATE.jpg",
+
+        audio:
+          "https://media.theaudioaesthetic.com/music/Don'O%20-%20FeelTheHate%20-%20RM2.mp3"
+      },
+
+
+      /* LOVE ME NOW */
+
+      {
+        type: "single",
+
+        title: "Love Me Now",
+
+        artist: "Don'o",
+
+        features: [
+          "Drain",
+          "Jaź"
+        ],
+
+        artwork:
+          "https://media.theaudioaesthetic.com/artwork/LOVEMENOW.jpg",
+
+        audio:
+          "https://media.theaudioaesthetic.com/music/Don'O%20x%20RashoudDrain%20x%20Jaz%20-%20LoveMeNow%20-%20RM2.mp3"
+      },
+
+
+      /* FORBIDDEN FRUIT — SINGLE */
+
+      {
+        type: "single",
+
+        title: "Forbidden Fruit",
+
+        artist: "Andre Austin",
+
+        features: [
+          "Cas Wyatt",
+          "Jaź"
+        ],
+
+        artwork:
+          "https://media.theaudioaesthetic.com/artwork/ForbiddenFruit.jpg",
+
+        audio:
+          "https://media.theaudioaesthetic.com/music/FORBIDDENFRUIT.mp3"
+      },
+
+
+      /* ===================================================
+         CULT CLASSIC — ALBUM
+         =================================================== */
+
+      {
+        type: "album",
+
+        title: "Cult Classic",
+
+        artist: "Andre Austin",
+
+        artwork:
+          "https://media.theaudioaesthetic.com/artwork/CultClassic.jpg",
+
+        tracks: [
+
+          {
+            title: "Travelin",
+
+            features: [
+              "Tanéa"
+            ],
+
+            audio:
+              "https://media.theaudioaesthetic.com/music/CultClassic/01.%20AndreAustin%20x%20Tanea%20-%20Travelin%20-%20RM1.mp3"
+          },
+
+
+          {
+            title: "Green Light Special",
+
+            features: [],
+
+            audio:
+              "https://media.theaudioaesthetic.com/music/CultClassic/02.%20AndreAustin%20-%20GLS%20-%20RM1.mp3"
+          },
+
+
+          {
+            title: "Forbidden Fruit",
+
+            features: [
+              "Cas Wyatt",
+              "Jaź"
+            ],
+
+            audio:
+              "https://media.theaudioaesthetic.com/music/CultClassic/03.%20FORBIDDENFRUIT.mp3"
+          },
+
+
+          {
+            title: "Buddy Love (Freestyle)",
+
+            features: [],
+
+            audio:
+              "https://media.theaudioaesthetic.com/music/CultClassic/04.%20AndreAustin%20-%20BuddyLove%20(Freestyle)%20-%20RM3.mp3"
+          },
+
+
+          {
+            title: "Jack In The Box (Interlude)",
+
+            features: [],
+
+            audio:
+              "https://media.theaudioaesthetic.com/music/CultClassic/05.%20AndreAustin%20-%20JITB%20-%20RM2.mp3"
+          },
+
+
+          {
+            title: "Temple Run",
+
+            features: [],
+
+            audio:
+              "https://media.theaudioaesthetic.com/music/CultClassic/06.%20AndreAustin%20-%20TempleRun%20-%20RM1.mp3"
+          },
+
+
+          {
+            title: "Medusa (Interlude)",
+
+            features: [],
+
+            audio:
+              "https://media.theaudioaesthetic.com/music/CultClassic/07.%20AndreAustin%20-%20Medusa%20-%20RM2.mp3"
+          },
+
+
+          {
+            title: "Legit",
+
+            features: [
+              "FatMatt"
+            ],
+
+            audio:
+              "https://media.theaudioaesthetic.com/music/CultClassic/08.%20AndreAustin%20x%20FatMatt%20-%20Legit%20-%20RM2.mp3"
+          },
+
+
+          {
+            title: "Ozaru",
+
+            features: [
+              "Jay Da Geek"
+            ],
+
+            audio:
+              "https://media.theaudioaesthetic.com/music/CultClassic/09.%20OZARU.mp3"
+          },
+
+
+          {
+            title: "Rolling Stoned",
+
+            features: [
+              "LTMOE"
+            ],
+
+            audio:
+              "https://media.theaudioaesthetic.com/music/CultClassic/10.%20AndreAustin%20-%20RollingStoned%20-%20RM3.mp3"
+          },
+
+
+          {
+            title: "Costly",
+
+            features: [],
+
+            audio:
+              "https://media.theaudioaesthetic.com/music/CultClassic/11.%20AndreAustin%20-%20Costly%20-%20RM1.mp3"
+          },
+
+
+          {
+            title: "Stargazing",
+
+            features: [],
+
+            audio:
+              "https://media.theaudioaesthetic.com/music/CultClassic/12.%20STARGAZING.mp3"
+          }
+
+        ]
       }
 
     ];
 
 
     /* =====================================================
-       SHUFFLE ARTWORK
+       SHUFFLE LIBRARY
        ===================================================== */
 
-    const shuffledLibrary =
-      [...library];
-
+    const shuffledLibrary = [...library];
 
     for (
       let i = shuffledLibrary.length - 1;
@@ -723,7 +767,6 @@
         Math.floor(
           Math.random() * (i + 1)
         );
-
 
       [
         shuffledLibrary[i],
@@ -742,81 +785,43 @@
        ===================================================== */
 
     const grid =
-      document.getElementById(
-        "musicGrid"
-      );
-
+      document.getElementById("musicGrid");
 
     const player =
-      document.getElementById(
-        "player"
-      );
-
+      document.getElementById("player");
 
     const playButton =
-      document.getElementById(
-        "playButton"
-      );
-
+      document.getElementById("playButton");
 
     const repeatButton =
-      document.getElementById(
-        "repeatButton"
-      );
-
+      document.getElementById("repeatButton");
 
     const songInfo =
-      document.getElementById(
-        "songInfo"
-      );
-
+      document.getElementById("songInfo");
 
     const songTitle =
-      document.getElementById(
-        "songTitle"
-      );
-
+      document.getElementById("songTitle");
 
     const songArtist =
-      document.getElementById(
-        "songArtist"
-      );
-
+      document.getElementById("songArtist");
 
     const albumOverlay =
-      document.getElementById(
-        "albumOverlay"
-      );
-
+      document.getElementById("albumOverlay");
 
     const albumCover =
-      document.getElementById(
-        "albumCover"
-      );
-
+      document.getElementById("albumCover");
 
     const albumTitle =
-      document.getElementById(
-        "albumTitle"
-      );
-
+      document.getElementById("albumTitle");
 
     const albumArtist =
-      document.getElementById(
-        "albumArtist"
-      );
-
+      document.getElementById("albumArtist");
 
     const tracklist =
-      document.getElementById(
-        "tracklist"
-      );
-
+      document.getElementById("tracklist");
 
     const closeAlbum =
-      document.getElementById(
-        "closeAlbum"
-      );
+      document.getElementById("closeAlbum");
 
 
     /* =====================================================
@@ -831,7 +836,7 @@
 
 
     /* =====================================================
-       FORMAT ARTIST DISPLAY
+       FORMAT ARTISTS
        ===================================================== */
 
     function formatArtists(
@@ -847,7 +852,6 @@
         return artist;
 
       }
-
 
       return (
         artist +
@@ -872,30 +876,19 @@
     ) {
 
       currentSong = {
-
         title,
         artist,
         audio,
         features
-
       };
 
+      currentAlbum = album;
 
-      currentAlbum =
-        album;
+      currentTrackIndex = trackIndex;
 
+      player.src = audio;
 
-      currentTrackIndex =
-        trackIndex;
-
-
-      player.src =
-        audio;
-
-
-      songTitle.textContent =
-        title;
-
+      songTitle.textContent = title;
 
       songArtist.textContent =
         formatArtists(
@@ -903,17 +896,11 @@
           features
         );
 
-
       songInfo.classList.add(
         "visible"
       );
 
-
       player.play();
-
-
-      playButton.textContent =
-        "❚❚";
 
     }
 
@@ -926,14 +913,9 @@
       item => {
 
         const artwork =
-          document.createElement(
-            "div"
-          );
+          document.createElement("div");
 
-
-        artwork.className =
-          "artwork";
-
+        artwork.className = "artwork";
 
         artwork.innerHTML = `
 
@@ -946,10 +928,6 @@
         `;
 
 
-        /* =================================================
-           SINGLE
-           ================================================= */
-
         if (
           item.type === "single"
         ) {
@@ -959,15 +937,10 @@
             () => {
 
               playSong(
-
                 item.title,
-
                 item.artist,
-
                 item.audio,
-
                 item.features
-
               );
 
             }
@@ -975,10 +948,6 @@
 
         }
 
-
-        /* =================================================
-           ALBUM
-           ================================================= */
 
         if (
           item.type === "album"
@@ -996,9 +965,7 @@
         }
 
 
-        grid.appendChild(
-          artwork
-        );
+        grid.appendChild(artwork);
 
       }
     );
@@ -1015,17 +982,13 @@
       albumCover.src =
         album.artwork;
 
-
       albumTitle.textContent =
         album.title;
-
 
       albumArtist.textContent =
         album.artist;
 
-
-      tracklist.innerHTML =
-        "";
+      tracklist.innerHTML = "";
 
 
       album.tracks.forEach(
@@ -1034,15 +997,10 @@
           index
         ) => {
 
-
           const button =
-            document.createElement(
-              "button"
-            );
+            document.createElement("button");
 
-
-          button.className =
-            "track";
+          button.className = "track";
 
 
           const featureText =
@@ -1056,29 +1014,16 @@
 
           button.innerHTML = `
 
-            <span
-              class="track-number">
-
-              ${String(
-                index + 1
-              ).padStart(2, "0")}
-
+            <span class="track-number">
+              ${String(index + 1).padStart(2, "0")}
             </span>
 
-
-            <span
-              class="track-title">
-
+            <span class="track-title">
               ${track.title}
-
             </span>
 
-
-            <span
-              class="track-feature">
-
+            <span class="track-feature">
               ${featureText}
-
             </span>
 
           `;
@@ -1089,21 +1034,13 @@
             () => {
 
               playSong(
-
                 track.title,
-
                 album.artist,
-
                 track.audio,
-
                 track.features,
-
                 album,
-
                 index
-
               );
-
 
               albumOverlay.classList.remove(
                 "visible"
@@ -1126,28 +1063,18 @@
       );
 
 
-      /* =================================================
-         START ALBUM
-         ================================================= */
+      /* START ALBUM AT TRACK 1 */
 
       const firstTrack =
         album.tracks[0];
 
-
       playSong(
-
         firstTrack.title,
-
         album.artist,
-
         firstTrack.audio,
-
         firstTrack.features,
-
         album,
-
         0
-
       );
 
     }
@@ -1178,9 +1105,7 @@
       () => {
 
         if (!currentSong) {
-
           return;
-
         }
 
 
@@ -1209,7 +1134,6 @@
         player.loop =
           !player.loop;
 
-
         repeatButton.style.opacity =
           player.loop
             ? "1"
@@ -1220,37 +1144,28 @@
 
 
     /* =====================================================
-       AUTOMATIC ALBUM PROGRESSION
+       AUTOMATIC ALBUM PLAYBACK
        ===================================================== */
 
     player.addEventListener(
       "ended",
       () => {
 
-
-        /* -----------------------------------------------
-           ALBUM PLAYBACK
-           ----------------------------------------------- */
-
         if (
           currentAlbum &&
           currentTrackIndex >= 0
         ) {
 
-
           const nextTrackIndex =
             currentTrackIndex + 1;
 
 
-          /* ---------------------------------------------
-             NEXT TRACK
-             --------------------------------------------- */
+          /* NEXT TRACK */
 
           if (
             nextTrackIndex <
             currentAlbum.tracks.length
           ) {
-
 
             const nextTrack =
               currentAlbum.tracks[
@@ -1259,19 +1174,12 @@
 
 
             playSong(
-
               nextTrack.title,
-
               currentAlbum.artist,
-
               nextTrack.audio,
-
               nextTrack.features,
-
               currentAlbum,
-
               nextTrackIndex
-
             );
 
 
@@ -1280,33 +1188,22 @@
           }
 
 
-          /* ---------------------------------------------
-             ALBUM FINISHED
-             --------------------------------------------- */
+          /* ALBUM FINISHED */
 
-          currentAlbum =
-            null;
+          currentAlbum = null;
 
+          currentTrackIndex = -1;
 
-          currentTrackIndex =
-            -1;
-
-
-          playButton.textContent =
-            "▶";
-
+          playButton.textContent = "▶";
 
           return;
 
         }
 
 
-        /* -----------------------------------------------
-           SINGLE FINISHED
-           ----------------------------------------------- */
+        /* SINGLE FINISHED */
 
-        playButton.textContent =
-          "▶";
+        playButton.textContent = "▶";
 
       }
     );
@@ -1320,8 +1217,7 @@
       "play",
       () => {
 
-        playButton.textContent =
-          "❚❚";
+        playButton.textContent = "❚❚";
 
       }
     );
@@ -1331,12 +1227,10 @@
       "pause",
       () => {
 
-        playButton.textContent =
-          "▶";
+        playButton.textContent = "▶";
 
       }
     );
-
 
   </script>
 
