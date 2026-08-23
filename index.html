@@ -1,10 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
 
   <title>The Audio Aesthetic</title>
+
 
   <style>
 
@@ -12,290 +19,572 @@
       box-sizing: border-box;
     }
 
+
     html,
     body {
+
       margin: 0;
       padding: 0;
+
       background: #000;
+
       min-height: 100%;
+
     }
+
 
     body {
+
       overflow-x: hidden;
-      font-family: Arial, Helvetica, sans-serif;
+
+      font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+
     }
 
-    /* ARTWORK GRID */
+
+    /* =====================================================
+       ARTWORK GRID
+       ===================================================== */
 
     .grid {
+
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+
+      grid-template-columns:
+        repeat(
+          auto-fill,
+          minmax(220px, 1fr)
+        );
+
       gap: 2px;
+
       padding: 2px;
+
     }
+
 
     .artwork {
+
       position: relative;
+
       aspect-ratio: 1 / 1;
+
       overflow: hidden;
+
       cursor: pointer;
+
       background: #111;
+
     }
+
 
     .artwork img {
+
       width: 100%;
       height: 100%;
+
       display: block;
+
       object-fit: cover;
-      transition: transform 0.4s ease, opacity 0.4s ease;
+
+      transition:
+        transform 0.4s ease,
+        opacity 0.4s ease;
+
     }
+
 
     .artwork:hover img {
+
       transform: scale(1.03);
+
       opacity: 0.8;
+
     }
 
-    /* SONG INFO */
+
+    /* =====================================================
+       SONG INFORMATION
+       ===================================================== */
 
     .song-info {
+
       position: fixed;
+
       left: 50%;
       bottom: 72px;
-      transform: translateX(-50%);
+
+      transform:
+        translateX(-50%);
+
       display: none;
+
       text-align: center;
+
       color: white;
+
       z-index: 10;
+
       pointer-events: none;
+
       white-space: nowrap;
+
     }
+
 
     .song-info.visible {
+
       display: block;
+
     }
+
 
     .song-title {
+
       font-size: 13px;
+
       margin: 0 0 4px;
+
       font-weight: 400;
+
     }
+
 
     .song-artist {
+
       font-size: 10px;
+
       margin: 0;
+
       color: #777;
+
     }
 
-    /* MINIMAL PLAYER */
+
+    /* =====================================================
+       MINIMAL PLAYER
+       ===================================================== */
 
     .player {
+
       position: fixed;
+
       left: 50%;
       bottom: 22px;
-      transform: translateX(-50%);
+
+      transform:
+        translateX(-50%);
+
       display: flex;
+
       align-items: center;
+
       justify-content: center;
+
       gap: 20px;
+
       z-index: 30;
+
     }
+
 
     .player button {
+
       border: none;
+
       background: none;
+
       color: #fff;
+
       font-size: 14px;
+
       cursor: pointer;
+
       padding: 4px;
+
       opacity: 0.65;
-      transition: opacity 0.2s ease, transform 0.2s ease;
+
+      transition:
+        opacity 0.2s ease,
+        transform 0.2s ease;
+
     }
+
 
     .player button:hover {
+
       opacity: 1;
+
       transform: scale(1.08);
+
     }
+
 
     .play-button {
+
       font-size: 18px !important;
+
     }
 
-    /* ALBUM OVERLAY */
+
+    /* =====================================================
+       ALBUM OVERLAY
+       ===================================================== */
 
     .album-overlay {
+
       position: fixed;
+
       inset: 0;
-      background: rgba(0, 0, 0, 0.94);
+
+      background:
+        rgba(0, 0, 0, 0.94);
+
       z-index: 100;
+
       display: none;
+
       align-items: center;
+
       justify-content: center;
+
       padding: 30px;
+
       overflow-y: auto;
+
     }
+
 
     .album-overlay.visible {
+
       display: flex;
+
     }
+
 
     .album-panel {
+
       width: 100%;
+
       max-width: 500px;
+
       color: white;
+
     }
+
 
     .album-header {
+
       display: flex;
+
       align-items: center;
+
       gap: 18px;
+
       margin-bottom: 28px;
+
     }
+
 
     .album-cover {
+
       width: 90px;
       height: 90px;
+
       object-fit: cover;
+
       flex-shrink: 0;
+
     }
+
 
     .album-details h2 {
+
       margin: 0 0 5px;
+
       font-size: 16px;
+
       font-weight: 400;
+
     }
+
 
     .album-details p {
+
       margin: 0;
+
       font-size: 11px;
+
       color: #777;
+
     }
 
-    /* TRACKLIST */
+
+    /* =====================================================
+       TRACKLIST
+       ===================================================== */
 
     .tracklist {
-      border-top: 1px solid #222;
+
+      border-top:
+        1px solid #222;
+
     }
+
 
     .track {
+
       display: flex;
+
       align-items: center;
+
       width: 100%;
+
       padding: 12px 4px;
+
       border: none;
-      border-bottom: 1px solid #222;
+
+      border-bottom:
+        1px solid #222;
+
       background: none;
+
       color: white;
+
       text-align: left;
+
       cursor: pointer;
+
       font-family: inherit;
-      transition: opacity 0.2s ease;
+
+      transition:
+        opacity 0.2s ease;
+
     }
+
 
     .track:hover {
+
       opacity: 0.55;
+
     }
+
+
+    /* CURRENTLY PLAYING TRACK */
+
+    .track.current {
+
+      opacity: 1;
+
+    }
+
+
+    .track.current
+    .track-number {
+
+      color: white;
+
+    }
+
+
+    .track.current
+    .track-title {
+
+      font-weight: 600;
+
+    }
+
 
     .track-number {
+
       width: 35px;
+
       color: #555;
+
       font-size: 11px;
+
       flex-shrink: 0;
+
     }
+
 
     .track-title {
+
       font-size: 12px;
+
       flex: 1;
+
     }
+
 
     .track-feature {
+
       font-size: 10px;
+
       color: #777;
+
       margin-left: 10px;
+
       text-align: right;
+
     }
 
-    /* CLOSE */
+
+    /* =====================================================
+       CLOSE BUTTON
+       ===================================================== */
 
     .close-album {
+
       position: fixed;
+
       top: 22px;
       right: 26px;
+
       border: none;
+
       background: none;
+
       color: white;
+
       font-size: 20px;
+
       cursor: pointer;
+
       opacity: 0.6;
+
       z-index: 110;
+
     }
+
 
     .close-album:hover {
+
       opacity: 1;
+
     }
 
-    /* MOBILE */
+
+    /* =====================================================
+       MOBILE
+       ===================================================== */
 
     @media (max-width: 600px) {
 
       .grid {
-        grid-template-columns: repeat(2, 1fr);
+
+        grid-template-columns:
+          repeat(2, 1fr);
+
         gap: 2px;
+
         padding: 2px;
+
       }
+
 
       .player {
+
         bottom: 18px;
+
       }
+
 
       .song-info {
+
         bottom: 62px;
+
       }
+
 
       .album-overlay {
+
         padding: 20px;
+
       }
+
 
       .album-cover {
+
         width: 75px;
         height: 75px;
+
       }
 
+
       .track-feature {
+
         font-size: 9px;
+
       }
 
     }
 
   </style>
+
 </head>
+
 
 <body>
 
-  <!-- ARTWORK -->
 
-  <main class="grid" id="musicGrid"></main>
+  <!-- =====================================================
+       ARTWORK GRID
+       ===================================================== -->
 
-  <!-- SONG INFO -->
+  <main
+    class="grid"
+    id="musicGrid">
+  </main>
 
-  <div class="song-info" id="songInfo">
 
-    <p class="song-title" id="songTitle"></p>
+  <!-- =====================================================
+       SONG INFORMATION
+       ===================================================== -->
 
-    <p class="song-artist" id="songArtist"></p>
+  <div
+    class="song-info"
+    id="songInfo">
+
+    <p
+      class="song-title"
+      id="songTitle">
+    </p>
+
+    <p
+      class="song-artist"
+      id="songArtist">
+    </p>
 
   </div>
 
-  <!-- ALBUM -->
 
-  <div class="album-overlay" id="albumOverlay">
+  <!-- =====================================================
+       ALBUM OVERLAY
+       ===================================================== -->
 
-    <button class="close-album" id="closeAlbum">
+  <div
+    class="album-overlay"
+    id="albumOverlay">
+
+
+    <button
+      class="close-album"
+      id="closeAlbum">
+
       ×
+
     </button>
+
 
     <div class="album-panel">
 
+
       <div class="album-header">
+
 
         <img
           class="album-cover"
@@ -304,44 +593,72 @@
           alt=""
         >
 
+
         <div class="album-details">
 
-          <h2 id="albumTitle"></h2>
+          <h2
+            id="albumTitle">
+          </h2>
 
-          <p id="albumArtist"></p>
+
+          <p
+            id="albumArtist">
+          </p>
 
         </div>
 
       </div>
 
-      <div class="tracklist" id="tracklist"></div>
+
+      <div
+        class="tracklist"
+        id="tracklist">
+      </div>
+
 
     </div>
 
   </div>
 
-  <!-- PLAYER -->
+
+  <!-- =====================================================
+       MINIMAL PLAYER
+       ===================================================== -->
 
   <div class="player">
+
 
     <button
       id="repeatButton"
       title="Repeat">
+
       ↻
+
     </button>
+
 
     <button
       id="playButton"
       class="play-button"
       title="Play / Pause">
+
       ▶
+
     </button>
+
 
   </div>
 
-  <audio id="player" preload="metadata"></audio>
+
+  <audio
+    id="player"
+    preload="metadata">
+  </audio>
+
+
 
   <script>
+
 
     /* =====================================================
        MUSIC LIBRARY
@@ -349,9 +666,13 @@
 
     const library = [
 
-      /* SAVE ME */
+
+      /* ===================================================
+         SAVE ME
+         =================================================== */
 
       {
+
         type: "single",
 
         title: "Save Me",
@@ -367,12 +688,16 @@
 
         audio:
           "https://media.theaudioaesthetic.com/music/SaveMe.mp3"
+
       },
 
 
-      /* WWF */
+      /* ===================================================
+         WWF
+         =================================================== */
 
       {
+
         type: "album",
 
         title: "WWF",
@@ -382,29 +707,38 @@
         artwork:
           "https://media.theaudioaesthetic.com/artwork/wwf.jpg",
 
+
         tracks: [
 
+
           {
+
             title: "First Down",
 
             features: [],
 
             audio:
               "https://media.theaudioaesthetic.com/music/WWF/01.%20ToNk%20-%20FirstDown%20-%20RM2.mp3"
+
           },
 
+
           {
+
             title: "10 Toes",
 
             features: [
-              "TreyVaro"
+              "Trey Varo"
             ],
 
             audio:
               "https://media.theaudioaesthetic.com/music/WWF/02.%20ToNk%20x%20TreyVaro%20-%2010Toes%20-%20RM3.mp3"
+
           },
 
+
           {
+
             title: "Toe To Toe",
 
             features: [
@@ -413,26 +747,34 @@
 
             audio:
               "https://media.theaudioaesthetic.com/music/WWF/03.%20ToNk%20x%20Don'o%20-%20ToeToToe%20-%20RM1.mp3"
+
           },
 
+
           {
+
             title: "Boastin",
 
             features: [
-              "PeriMaison"
+              "Peri Maison"
             ],
 
             audio:
               "https://media.theaudioaesthetic.com/music/WWF/04.%20ToNk%20x%20PeriMaison%20-%20Boastin.mp3"
+
           }
 
         ]
+
       },
 
 
-      /* DO OUR OWN THING */
+      /* ===================================================
+         DO OUR OWN THING
+         =================================================== */
 
       {
+
         type: "single",
 
         title: "Do Our Own Thing",
@@ -448,12 +790,16 @@
 
         audio:
           "https://media.theaudioaesthetic.com/music/RashoudDrain%20x%20Don'O%20-%20DOT%20-%20RM2.mp3"
+
       },
 
 
-      /* HELL OF A LIFE */
+      /* ===================================================
+         HELL OF A LIFE
+         =================================================== */
 
       {
+
         type: "single",
 
         title: "Hell Of A Life",
@@ -469,12 +815,16 @@
 
         audio:
           "https://media.theaudioaesthetic.com/music/Don'o%20-%20HellOfALife%20-RM2.mp3"
+
       },
 
 
-      /* GLORY [x2] */
+      /* ===================================================
+         GLORY [x2]
+         =================================================== */
 
       {
+
         type: "single",
 
         title: "GLORY [x2]",
@@ -488,12 +838,16 @@
 
         audio:
           "https://media.theaudioaesthetic.com/music/Jaz%20x%20Don'O%20-%20GloryGlory.mp3"
+
       },
 
 
-      /* HIGHS & LOWS */
+      /* ===================================================
+         HIGHS & LOWS
+         =================================================== */
 
       {
+
         type: "single",
 
         title: "Highs & Lows",
@@ -509,12 +863,16 @@
 
         audio:
           "https://media.theaudioaesthetic.com/music/RetroREW%20-%20HIGHS%26LOWS.mp3"
+
       },
 
 
-      /* I BEEN */
+      /* ===================================================
+         I BEEN
+         =================================================== */
 
       {
+
         type: "single",
 
         title: "I Been",
@@ -531,12 +889,16 @@
 
         audio:
           "https://media.theaudioaesthetic.com/music/ToNk%20x%20Cardell%20x%20KingTay%20-%20IBeen%20-%20RM2.mp3"
+
       },
 
 
-      /* FEEL THE HATE */
+      /* ===================================================
+         FEEL THE HATE
+         =================================================== */
 
       {
+
         type: "single",
 
         title: "Feel The Hate",
@@ -552,12 +914,16 @@
 
         audio:
           "https://media.theaudioaesthetic.com/music/Don'O%20-%20FeelTheHate%20-%20RM2.mp3"
+
       },
 
 
-      /* LOVE ME NOW */
+      /* ===================================================
+         LOVE ME NOW
+         =================================================== */
 
       {
+
         type: "single",
 
         title: "Love Me Now",
@@ -574,12 +940,16 @@
 
         audio:
           "https://media.theaudioaesthetic.com/music/Don'O%20x%20RashoudDrain%20x%20Jaz%20-%20LoveMeNow%20-%20RM2.mp3"
+
       },
 
 
-      /* FORBIDDEN FRUIT — SINGLE */
+      /* ===================================================
+         FORBIDDEN FRUIT — SINGLE
+         =================================================== */
 
       {
+
         type: "single",
 
         title: "Forbidden Fruit",
@@ -596,14 +966,16 @@
 
         audio:
           "https://media.theaudioaesthetic.com/music/FORBIDDENFRUIT.mp3"
+
       },
 
 
       /* ===================================================
-         CULT CLASSIC — ALBUM
+         CULT CLASSIC
          =================================================== */
 
       {
+
         type: "album",
 
         title: "Cult Classic",
@@ -613,9 +985,12 @@
         artwork:
           "https://media.theaudioaesthetic.com/artwork/CultClassic.jpg",
 
+
         tracks: [
 
+
           {
+
             title: "Travelin",
 
             features: [
@@ -624,20 +999,24 @@
 
             audio:
               "https://media.theaudioaesthetic.com/music/CultClassic/01.%20AndreAustin%20x%20Tanea%20-%20Travelin%20-%20RM1.mp3"
+
           },
 
 
           {
+
             title: "Green Light Special",
 
             features: [],
 
             audio:
               "https://media.theaudioaesthetic.com/music/CultClassic/02.%20AndreAustin%20-%20GLS%20-%20RM1.mp3"
+
           },
 
 
           {
+
             title: "Forbidden Fruit",
 
             features: [
@@ -647,50 +1026,60 @@
 
             audio:
               "https://media.theaudioaesthetic.com/music/CultClassic/03.%20FORBIDDENFRUIT.mp3"
+
           },
 
 
           {
+
             title: "Buddy Love (Freestyle)",
 
             features: [],
 
             audio:
               "https://media.theaudioaesthetic.com/music/CultClassic/04.%20AndreAustin%20-%20BuddyLove%20(Freestyle)%20-%20RM3.mp3"
+
           },
 
 
           {
+
             title: "Jack In The Box (Interlude)",
 
             features: [],
 
             audio:
               "https://media.theaudioaesthetic.com/music/CultClassic/05.%20AndreAustin%20-%20JITB%20-%20RM2.mp3"
+
           },
 
 
           {
+
             title: "Temple Run",
 
             features: [],
 
             audio:
               "https://media.theaudioaesthetic.com/music/CultClassic/06.%20AndreAustin%20-%20TempleRun%20-%20RM1.mp3"
+
           },
 
 
           {
+
             title: "Medusa (Interlude)",
 
             features: [],
 
             audio:
               "https://media.theaudioaesthetic.com/music/CultClassic/07.%20AndreAustin%20-%20Medusa%20-%20RM2.mp3"
+
           },
 
 
           {
+
             title: "Legit",
 
             features: [
@@ -699,10 +1088,12 @@
 
             audio:
               "https://media.theaudioaesthetic.com/music/CultClassic/08.%20AndreAustin%20x%20FatMatt%20-%20Legit%20-%20RM2.mp3"
+
           },
 
 
           {
+
             title: "Ozaru",
 
             features: [
@@ -711,10 +1102,12 @@
 
             audio:
               "https://media.theaudioaesthetic.com/music/CultClassic/09.%20OZARU.mp3"
+
           },
 
 
           {
+
             title: "Rolling Stoned",
 
             features: [
@@ -723,50 +1116,313 @@
 
             audio:
               "https://media.theaudioaesthetic.com/music/CultClassic/10.%20AndreAustin%20-%20RollingStoned%20-%20RM3.mp3"
+
           },
 
 
           {
+
             title: "Costly",
 
             features: [],
 
             audio:
               "https://media.theaudioaesthetic.com/music/CultClassic/11.%20AndreAustin%20-%20Costly%20-%20RM1.mp3"
+
           },
 
 
           {
+
             title: "Stargazing",
 
             features: [],
 
             audio:
               "https://media.theaudioaesthetic.com/music/CultClassic/12.%20STARGAZING.mp3"
+
           }
 
         ]
+
+      },
+
+
+      /* ===================================================
+         TRILL STORY
+         =================================================== */
+
+      {
+
+        type: "album",
+
+        title: "Trill Story",
+
+        artist: "Don'o",
+
+        artwork:
+          "https://media.theaudioaesthetic.com/artwork/TRILLSTORY.jpg",
+
+
+        tracks: [
+
+
+          {
+
+            title: "Trill Intro",
+
+            features: [
+              "Heartbreak Sir"
+            ],
+
+            audio:
+              "https://media.theaudioaesthetic.com/music/TRILL%20STORY/01%20Trill%20Intro.mp3"
+
+          },
+
+
+          {
+
+            title: "Girls Be Like",
+
+            features: [
+              "Jaź",
+              "Heartbreak Sir"
+            ],
+
+            audio:
+              "https://media.theaudioaesthetic.com/music/TRILL%20STORY/02%20Girls%20Be%20Like.mp3"
+
+          },
+
+
+          {
+
+            title: "Around You",
+
+            features: [
+              "Jaź",
+              "Heartbreak Sir"
+            ],
+
+            audio:
+              "https://media.theaudioaesthetic.com/music/TRILL%20STORY/03%20Around%20You.mp3"
+
+          },
+
+
+          {
+
+            title: "Sweet Lady",
+
+            features: [
+              "Tre Aces"
+            ],
+
+            audio:
+              "https://media.theaudioaesthetic.com/music/TRILL%20STORY/04%20Sweet%20Lady.mp3"
+
+          },
+
+
+          {
+
+            title: "Write A Book",
+
+            features: [
+              "Heartbreak Sir"
+            ],
+
+            audio:
+              "https://media.theaudioaesthetic.com/music/TRILL%20STORY/05%20Write%20A%20Book.mp3"
+
+          },
+
+
+          {
+
+            title:
+              "Get You Out My Mind / This That",
+
+            features: [
+              "Heartbreak Sir"
+            ],
+
+            audio:
+              "https://media.theaudioaesthetic.com/music/TRILL%20STORY/06%20Get%20You%20Out%20My%20Mind_This%20That.mp3"
+
+          },
+
+
+          {
+
+            title: "Spark Up",
+
+            features: [
+              "Heartbreak Sir"
+            ],
+
+            audio:
+              "https://media.theaudioaesthetic.com/music/TRILL%20STORY/07%20Spark%20Up.mp3"
+
+          },
+
+
+          {
+
+            title: "Money Say",
+
+            features: [
+              "Heartbreak Sir"
+            ],
+
+            audio:
+              "https://media.theaudioaesthetic.com/music/TRILL%20STORY/08%20Money%20Say.mp3"
+
+          },
+
+
+          {
+
+            title: "You A Star",
+
+            features: [
+              "Heartbreak Sir"
+            ],
+
+            audio:
+              "https://media.theaudioaesthetic.com/music/TRILL%20STORY/09%20You%20A%20Star.mp3"
+
+          },
+
+
+          {
+
+            title: "Trill Outtro",
+
+            features: [
+              "Heartbreak Sir"
+            ],
+
+            audio:
+              "https://media.theaudioaesthetic.com/music/TRILL%20STORY/10%20Trill%20Outtro.mp3"
+
+          }
+
+        ]
+
+      },
+
+
+      /* ===================================================
+         725
+         =================================================== */
+
+      {
+
+        type: "album",
+
+        title: "725",
+
+        artist: "Don'o",
+
+        artwork:
+          "https://media.theaudioaesthetic.com/artwork/725COVER.jpg",
+
+
+        tracks: [
+
+
+          {
+
+            title: "Cry No More",
+
+            features: [],
+
+            audio:
+              "https://media.theaudioaesthetic.com/music/725/01.%20Cry%20No%20More.mp3"
+
+          },
+
+
+          {
+
+            title: "Made Men",
+
+            features: [],
+
+            audio:
+              "https://media.theaudioaesthetic.com/music/725/02.%20Made%20Men.mp3"
+
+          },
+
+
+          {
+
+            title: "We Ride",
+
+            features: [],
+
+            audio:
+              "https://media.theaudioaesthetic.com/music/725/03.%20We%20Ride.mp3"
+
+          },
+
+
+          {
+
+            title: "10AM",
+
+            features: [],
+
+            audio:
+              "https://media.theaudioaesthetic.com/music/725/04.%2010AM.mp3"
+
+          },
+
+
+          {
+
+            title: "A Price To Pay",
+
+            features: [],
+
+            audio:
+              "https://media.theaudioaesthetic.com/music/725/05.%20A%20Price%20To%20Pay.mp3"
+
+          }
+
+        ]
+
       }
 
     ];
 
 
     /* =====================================================
-       SHUFFLE LIBRARY
+       SHUFFLE ARTWORK
        ===================================================== */
 
-    const shuffledLibrary = [...library];
+    const shuffledLibrary =
+      [...library];
+
 
     for (
-      let i = shuffledLibrary.length - 1;
+      let i =
+        shuffledLibrary.length - 1;
+
       i > 0;
+
       i--
+
     ) {
 
       const j =
         Math.floor(
-          Math.random() * (i + 1)
+          Math.random() *
+          (i + 1)
         );
+
 
       [
         shuffledLibrary[i],
@@ -785,43 +1441,81 @@
        ===================================================== */
 
     const grid =
-      document.getElementById("musicGrid");
+      document.getElementById(
+        "musicGrid"
+      );
+
 
     const player =
-      document.getElementById("player");
+      document.getElementById(
+        "player"
+      );
+
 
     const playButton =
-      document.getElementById("playButton");
+      document.getElementById(
+        "playButton"
+      );
+
 
     const repeatButton =
-      document.getElementById("repeatButton");
+      document.getElementById(
+        "repeatButton"
+      );
+
 
     const songInfo =
-      document.getElementById("songInfo");
+      document.getElementById(
+        "songInfo"
+      );
+
 
     const songTitle =
-      document.getElementById("songTitle");
+      document.getElementById(
+        "songTitle"
+      );
+
 
     const songArtist =
-      document.getElementById("songArtist");
+      document.getElementById(
+        "songArtist"
+      );
+
 
     const albumOverlay =
-      document.getElementById("albumOverlay");
+      document.getElementById(
+        "albumOverlay"
+      );
+
 
     const albumCover =
-      document.getElementById("albumCover");
+      document.getElementById(
+        "albumCover"
+      );
+
 
     const albumTitle =
-      document.getElementById("albumTitle");
+      document.getElementById(
+        "albumTitle"
+      );
+
 
     const albumArtist =
-      document.getElementById("albumArtist");
+      document.getElementById(
+        "albumArtist"
+      );
+
 
     const tracklist =
-      document.getElementById("tracklist");
+      document.getElementById(
+        "tracklist"
+      );
+
 
     const closeAlbum =
-      document.getElementById("closeAlbum");
+      document.getElementById(
+        "closeAlbum"
+      );
 
 
     /* =====================================================
@@ -836,7 +1530,7 @@
 
 
     /* =====================================================
-       FORMAT ARTISTS
+       FORMAT ARTIST
        ===================================================== */
 
     function formatArtists(
@@ -853,10 +1547,13 @@
 
       }
 
+
       return (
+
         artist +
         " feat. " +
         features.join(", ")
+
       );
 
     }
@@ -867,28 +1564,50 @@
        ===================================================== */
 
     function playSong(
+
       title,
+
       artist,
+
       audio,
+
       features = [],
+
       album = null,
+
       trackIndex = -1
+
     ) {
 
+
       currentSong = {
+
         title,
+
         artist,
+
         audio,
+
         features
+
       };
 
-      currentAlbum = album;
 
-      currentTrackIndex = trackIndex;
+      currentAlbum =
+        album;
 
-      player.src = audio;
 
-      songTitle.textContent = title;
+      currentTrackIndex =
+        trackIndex;
+
+
+      player.src =
+        audio;
+
+
+      songTitle.textContent =
+        title;
+
 
       songArtist.textContent =
         formatArtists(
@@ -896,26 +1615,37 @@
           features
         );
 
+
       songInfo.classList.add(
         "visible"
       );
 
+
       player.play();
+
+
+      updateTrackHighlight();
 
     }
 
 
     /* =====================================================
-       BUILD ARTWORK GRID
+       BUILD ARTWORK
        ===================================================== */
 
     shuffledLibrary.forEach(
       item => {
 
-        const artwork =
-          document.createElement("div");
 
-        artwork.className = "artwork";
+        const artwork =
+          document.createElement(
+            "div"
+          );
+
+
+        artwork.className =
+          "artwork";
+
 
         artwork.innerHTML = `
 
@@ -928,44 +1658,66 @@
         `;
 
 
+        /* SINGLE */
+
         if (
-          item.type === "single"
+          item.type ===
+          "single"
         ) {
+
 
           artwork.addEventListener(
             "click",
             () => {
 
+
               playSong(
+
                 item.title,
+
                 item.artist,
+
                 item.audio,
+
                 item.features
+
               );
+
 
             }
           );
 
+
         }
 
 
+        /* ALBUM */
+
         if (
-          item.type === "album"
+          item.type ===
+          "album"
         ) {
+
 
           artwork.addEventListener(
             "click",
             () => {
+
 
               openAlbum(item);
 
+
             }
           );
+
 
         }
 
 
-        grid.appendChild(artwork);
+        grid.appendChild(
+          artwork
+        );
+
 
       }
     );
@@ -979,51 +1731,91 @@
       album
     ) {
 
+
       albumCover.src =
         album.artwork;
+
 
       albumTitle.textContent =
         album.title;
 
+
       albumArtist.textContent =
         album.artist;
 
-      tracklist.innerHTML = "";
 
+      tracklist.innerHTML =
+        "";
+
+
+      /* BUILD TRACKLIST */
 
       album.tracks.forEach(
+
         (
           track,
           index
         ) => {
 
-          const button =
-            document.createElement("button");
 
-          button.className = "track";
+          const button =
+            document.createElement(
+              "button"
+            );
+
+
+          button.className =
+            "track";
+
+
+          button.dataset.index =
+            index;
 
 
           const featureText =
+
             track.features &&
             track.features.length > 0
 
-              ? `feat. ${track.features.join(", ")}`
+              ? `feat. ${
+                  track.features.join(
+                    ", "
+                  )
+                }`
 
               : "";
 
 
           button.innerHTML = `
 
-            <span class="track-number">
-              ${String(index + 1).padStart(2, "0")}
+            <span
+              class="track-number">
+
+              ${
+                String(
+                  index + 1
+                ).padStart(
+                  2,
+                  "0"
+                )
+              }
+
             </span>
 
-            <span class="track-title">
+
+            <span
+              class="track-title">
+
               ${track.title}
+
             </span>
 
-            <span class="track-feature">
+
+            <span
+              class="track-feature">
+
               ${featureText}
+
             </span>
 
           `;
@@ -1033,18 +1825,23 @@
             "click",
             () => {
 
+
               playSong(
+
                 track.title,
+
                 album.artist,
+
                 track.audio,
+
                 track.features,
+
                 album,
+
                 index
+
               );
 
-              albumOverlay.classList.remove(
-                "visible"
-              );
 
             }
           );
@@ -1054,27 +1851,121 @@
             button
           );
 
+
         }
+
       );
 
+
+      /* =================================================
+         IMPORTANT:
+         DO NOT RESTART THE ALBUM IF IT IS
+         ALREADY THE CURRENT ALBUM.
+         ================================================= */
+
+
+      const sameAlbum =
+        currentAlbum ===
+        album;
+
+
+      const albumAlreadyPlaying =
+        sameAlbum &&
+        currentSong !== null;
+
+
+      if (
+        !albumAlreadyPlaying
+      ) {
+
+
+        const firstTrack =
+          album.tracks[0];
+
+
+        playSong(
+
+          firstTrack.title,
+
+          album.artist,
+
+          firstTrack.audio,
+
+          firstTrack.features,
+
+          album,
+
+          0
+
+        );
+
+      }
+
+
+      /* SHOW OVERLAY */
 
       albumOverlay.classList.add(
         "visible"
       );
 
 
-      /* START ALBUM AT TRACK 1 */
+      /* HIGHLIGHT CURRENT TRACK */
 
-      const firstTrack =
-        album.tracks[0];
+      updateTrackHighlight();
 
-      playSong(
-        firstTrack.title,
-        album.artist,
-        firstTrack.audio,
-        firstTrack.features,
-        album,
-        0
+    }
+
+
+    /* =====================================================
+       HIGHLIGHT CURRENT TRACK
+       ===================================================== */
+
+    function updateTrackHighlight() {
+
+
+      const tracks =
+        tracklist.querySelectorAll(
+          ".track"
+        );
+
+
+      tracks.forEach(
+        (
+          track
+        ) => {
+
+
+          const index =
+            Number(
+              track.dataset.index
+            );
+
+
+          if (
+
+            currentAlbum &&
+            index ===
+              currentTrackIndex
+
+          ) {
+
+
+            track.classList.add(
+              "current"
+            );
+
+
+          } else {
+
+
+            track.classList.remove(
+              "current"
+            );
+
+
+          }
+
+        }
       );
 
     }
@@ -1088,9 +1979,11 @@
       "click",
       () => {
 
+
         albumOverlay.classList.remove(
           "visible"
         );
+
 
       }
     );
@@ -1104,18 +1997,29 @@
       "click",
       () => {
 
-        if (!currentSong) {
+
+        if (
+          !currentSong
+        ) {
+
           return;
+
         }
 
 
-        if (player.paused) {
+        if (
+          player.paused
+        ) {
+
 
           player.play();
 
+
         } else {
 
+
           player.pause();
+
 
         }
 
@@ -1131,13 +2035,17 @@
       "click",
       () => {
 
+
         player.loop =
           !player.loop;
 
+
         repeatButton.style.opacity =
+
           player.loop
             ? "1"
             : "0.65";
+
 
       }
     );
@@ -1151,10 +2059,16 @@
       "ended",
       () => {
 
+
+        /* ALBUM */
+
         if (
+
           currentAlbum &&
           currentTrackIndex >= 0
+
         ) {
+
 
           const nextTrackIndex =
             currentTrackIndex + 1;
@@ -1163,9 +2077,12 @@
           /* NEXT TRACK */
 
           if (
+
             nextTrackIndex <
             currentAlbum.tracks.length
+
           ) {
+
 
             const nextTrack =
               currentAlbum.tracks[
@@ -1174,12 +2091,19 @@
 
 
             playSong(
+
               nextTrack.title,
+
               currentAlbum.artist,
+
               nextTrack.audio,
+
               nextTrack.features,
+
               currentAlbum,
+
               nextTrackIndex
+
             );
 
 
@@ -1190,11 +2114,20 @@
 
           /* ALBUM FINISHED */
 
-          currentAlbum = null;
+          currentAlbum =
+            null;
 
-          currentTrackIndex = -1;
 
-          playButton.textContent = "▶";
+          currentTrackIndex =
+            -1;
+
+
+          updateTrackHighlight();
+
+
+          playButton.textContent =
+            "▶";
+
 
           return;
 
@@ -1203,7 +2136,9 @@
 
         /* SINGLE FINISHED */
 
-        playButton.textContent = "▶";
+        playButton.textContent =
+          "▶";
+
 
       }
     );
@@ -1217,7 +2152,10 @@
       "play",
       () => {
 
-        playButton.textContent = "❚❚";
+
+        playButton.textContent =
+          "❚❚";
+
 
       }
     );
@@ -1227,12 +2165,17 @@
       "pause",
       () => {
 
-        playButton.textContent = "▶";
+
+        playButton.textContent =
+          "▶";
+
 
       }
     );
 
+
   </script>
 
 </body>
+
 </html>
