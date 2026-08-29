@@ -256,14 +256,9 @@ body{
   display:none;
   text-align:center;
   color:#fff;
-  z-index:20;
+  z-index:80;
   pointer-events:none;
   white-space:nowrap;
-}
-
-.single-support-button{
-  pointer-events:auto;
-  cursor:pointer;
 }
 
 .song-info.visible{
@@ -280,6 +275,13 @@ body{
   font-size:10px;
   margin:0;
   color:#777;
+}
+
+.single-support-button{
+  pointer-events:auto;
+  cursor:pointer;
+  position:relative;
+  z-index:81;
 }
 
 /* =========================
@@ -497,15 +499,11 @@ body{
 
 <main class="grid" id="musicGrid"></main>
 
-<!-- SEARCH -->
-
 <button
   class="top-button search-button"
   id="searchButton"
   title="Search"
 >⌕</button>
-
-<!-- INSTAGRAM -->
 
 <a
   class="top-button instagram-button"
@@ -545,8 +543,6 @@ body{
 
 </div>
 
-<!-- SONG INFO -->
-
 <div class="song-info" id="songInfo">
 
   <p
@@ -569,8 +565,6 @@ body{
   ></a>
 
 </div>
-
-<!-- ALBUM -->
 
 <div
   class="album-overlay"
@@ -616,8 +610,6 @@ body{
   </div>
 
 </div>
-
-<!-- PLAYER -->
 
 <div class="player">
 
@@ -1385,31 +1377,30 @@ function playSong(
 
   if(!album){
 
-    const supportArtist=
-      getSupportArtist(artist);
+    const libraryItem = library.find(item =>
+      item.type === "single" &&
+      item.title === title &&
+      item.artist === artist
+    );
 
-    const link=
-      artistSupport[supportArtist];
-
-    const libraryItem=
-      library.find(item=>
-        item.type==="single" &&
-        item.title===title &&
-        item.artist===artist
-      );
-
-    const supportEnabled=
+    const supportEnabled =
       !libraryItem ||
       libraryItem.support !== false;
 
-    if(link && supportEnabled){
+    const supportArtist =
+      getSupportArtist(artist);
 
-      singleSupport.href=link;
+    const link =
+      artistSupport[supportArtist];
 
-      singleSupport.textContent=
-        "Support "+supportArtist;
+    if(supportEnabled && link){
 
-      singleSupport.style.display=
+      singleSupport.href = link;
+
+      singleSupport.textContent =
+        "Support " + supportArtist;
+
+      singleSupport.style.display =
         "inline-block";
 
     }
