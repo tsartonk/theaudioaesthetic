@@ -76,11 +76,11 @@ body{
 
 .search-input{
   width:100%;
-  padding:10px 12px;
+  padding:9px 12px;
   border:1px solid #222;
   border-radius:2px;
   outline:none;
-  background:rgba(0,0,0,.94);
+  background:rgba(0,0,0,.92);
   color:#fff;
   font-family:inherit;
   font-size:12px;
@@ -127,48 +127,52 @@ body{
 }
 
 /* =========================
-   TOP BUTTONS
+   TOP RIGHT BUTTONS
 ========================= */
 
-.top-button{
+.top-buttons{
   position:fixed;
-  top:17px;
+  top:16px;
+  right:20px;
   z-index:60;
+  display:flex;
+  align-items:center;
+  gap:16px;
+}
+
+.search-button,
+.instagram-button{
   border:0;
   background:none;
   color:#fff;
   cursor:pointer;
   opacity:.55;
   transition:opacity .2s ease,transform .2s ease;
-}
-
-.top-button:hover{
-  opacity:1;
-  transform:scale(1.08);
-}
-
-.search-button{
-  right:22px;
-  font-size:22px;
-  line-height:1;
-}
-
-.instagram-button{
-  right:58px;
-  width:20px;
-  height:20px;
   padding:0;
   display:flex;
   align-items:center;
   justify-content:center;
 }
 
+.search-button{
+  font-size:25px;
+  line-height:1;
+}
+
+.instagram-button{
+  text-decoration:none;
+}
+
 .instagram-button svg{
   width:19px;
   height:19px;
-  fill:none;
-  stroke:currentColor;
-  stroke-width:1.7;
+  display:block;
+}
+
+.search-button:hover,
+.instagram-button:hover{
+  opacity:1;
+  transform:scale(1.08);
 }
 
 /* =========================
@@ -398,20 +402,26 @@ body{
 }
 
 /* =========================
-   SUPPORT
+   SUPPORT ARTIST
 ========================= */
 
-.support-link{
-  display:inline-block;
-  margin-top:7px;
+.support-artist{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  margin-top:22px;
+  padding:8px 13px;
+  border:1px solid #222;
   color:#777;
-  font-size:9px;
   text-decoration:none;
-  transition:color .2s ease;
+  font-size:9px;
+  letter-spacing:.4px;
+  transition:color .2s ease,border-color .2s ease;
 }
 
-.support-link:hover{
+.support-artist:hover{
   color:#fff;
+  border-color:#555;
 }
 
 /* =========================
@@ -451,15 +461,19 @@ body{
     gap:20px;
   }
 
-  .search-button{
+  .top-buttons{
     top:13px;
-    right:14px;
-    font-size:22px;
+    right:16px;
+    gap:14px;
   }
 
-  .instagram-button{
-    top:14px;
-    right:49px;
+  .search-button{
+    font-size:24px;
+  }
+
+  .instagram-button svg{
+    width:18px;
+    height:18px;
   }
 
   .search-wrap{
@@ -487,31 +501,35 @@ body{
 
 <main class="grid" id="musicGrid"></main>
 
-<!-- INSTAGRAM -->
+<!-- TOP RIGHT -->
 
-<a
-  class="top-button instagram-button"
-  href="https://www.instagram.com/theaudioaesthetic"
-  target="_blank"
-  rel="noopener noreferrer"
-  title="The Audio Aesthetic Instagram"
-  aria-label="The Audio Aesthetic Instagram"
->
-  <svg viewBox="0 0 24 24">
-    <rect x="3.5" y="3.5" width="17" height="17" rx="5"></rect>
-    <circle cx="12" cy="12" r="4"></circle>
-    <circle cx="17.4" cy="6.7" r="1"></circle>
-  </svg>
-</a>
+<div class="top-buttons">
+
+  <button
+    class="search-button"
+    id="searchButton"
+    title="Search"
+    aria-label="Search"
+  >⌕</button>
+
+  <a
+    class="instagram-button"
+    href="https://www.instagram.com/theaudioaesthetic"
+    target="_blank"
+    rel="noopener noreferrer"
+    title="Instagram"
+    aria-label="The Audio Aesthetic Instagram"
+  >
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7">
+      <rect x="3" y="3" width="18" height="18" rx="5"></rect>
+      <circle cx="12" cy="12" r="4"></circle>
+      <circle cx="17.5" cy="6.5" r="1"></circle>
+    </svg>
+  </a>
+
+</div>
 
 <!-- SEARCH -->
-
-<button
-  class="top-button search-button"
-  id="searchButton"
-  title="Search"
-  aria-label="Search"
->⌕</button>
 
 <div class="search-wrap" id="searchWrap">
 
@@ -523,51 +541,22 @@ body{
     autocomplete="off"
   >
 
-  <div
-    class="search-results"
-    id="searchResults"
-  ></div>
+  <div class="search-results" id="searchResults"></div>
 
 </div>
 
 <!-- SONG INFO -->
 
 <div class="song-info" id="songInfo">
-
-  <p
-    class="song-title"
-    id="songTitle"
-  ></p>
-
-  <p
-    class="song-artist"
-    id="songArtist"
-  ></p>
-
-  <a
-    class="support-link"
-    id="supportLink"
-    href="#"
-    target="_blank"
-    rel="noopener noreferrer"
-    style="display:none;"
-  >
-    support artist
-  </a>
-
+  <p class="song-title" id="songTitle"></p>
+  <p class="song-artist" id="songArtist"></p>
 </div>
 
 <!-- ALBUM -->
 
-<div
-  class="album-overlay"
-  id="albumOverlay"
->
+<div class="album-overlay" id="albumOverlay">
 
-  <button
-    class="close-album"
-    id="closeAlbum"
-  >×</button>
+  <button class="close-album" id="closeAlbum">×</button>
 
   <div class="album-panel">
 
@@ -583,17 +572,13 @@ body{
       <div class="album-details">
 
         <h2 id="albumTitle"></h2>
-
         <p id="albumArtist"></p>
 
       </div>
 
     </div>
 
-    <div
-      class="tracklist"
-      id="tracklist"
-    ></div>
+    <div class="tracklist" id="tracklist"></div>
 
   </div>
 
@@ -603,10 +588,7 @@ body{
 
 <div class="player">
 
-  <div
-    class="waveform-wrap"
-    id="waveformWrap"
-  >
+  <div class="waveform-wrap" id="waveformWrap">
 
     <canvas id="waveform"></canvas>
 
@@ -1124,7 +1106,8 @@ const library = [
     artist:"Jaź, Don'o",
     features:[],
     artwork:"https://media.theaudioaesthetic.com/artwork/MISSEDCALLS.jpg",
-    audio:"https://media.theaudioaesthetic.com/music/Jaz%CC%81%20%26%20Don'o%20-%20MISSEDCALLS.mp3"
+    audio:"https://media.theaudioaesthetic.com/music/Jaz%CC%81%20%26%20Don'o%20-%20MISSEDCALLS.mp3",
+    noSupport:true
   },
 
   {
@@ -1140,23 +1123,17 @@ const library = [
 
 
 /* =========================================================
-   ARTIST SUPPORT
+   ARTIST SUPPORT LINKS
 ========================================================= */
 
 const artistSupport = {
-
   "Andre Austin":"https://cash.app/$EAUSMC",
-
   "Don'o":"https://cash.app/$donohanks",
-
-  "Jaź":"https://cash.app/$jharris0197",
-
+  "Jaź":"https://cash.app/jharris0197",
   "ToNk":"https://cash.app/$TheLionization",
-
   "Longmoney Pierre":"https://cash.app/tylerpierre",
-
+  "C.A.m lnz":"https://cash.app/$SEETHRUCAMLNZ",
   "C.A.m":"https://cash.app/$SEETHRUCAMLNZ"
-
 };
 
 
@@ -1177,7 +1154,6 @@ const randomButton=document.getElementById("randomButton");
 const songInfo=document.getElementById("songInfo");
 const songTitle=document.getElementById("songTitle");
 const songArtist=document.getElementById("songArtist");
-const supportLink=document.getElementById("supportLink");
 
 const albumOverlay=document.getElementById("albumOverlay");
 const albumCover=document.getElementById("albumCover");
@@ -1229,40 +1205,18 @@ function formatArtists(artist,features=[]){
    SUPPORT LINK
 ========================================================= */
 
-function updateSupportLink(artist){
+function getSupportArtist(artist){
 
-  const link=artistSupport[artist];
-
-  /*
-    Missed Calls is intentionally excluded.
-  */
-
-  if(
-    currentSong &&
-    currentSong.title==="Missed Calls" &&
-    currentSong.artist==="Jaź, Don'o"
-  ){
-
-    supportLink.style.display="none";
-    supportLink.removeAttribute("href");
-    return;
-
+  if(artist==="Jaź, Don'o"){
+    return null;
   }
 
-  if(link){
-
-    supportLink.href=link;
-    supportLink.style.display="inline-block";
-
+  if(artist.includes(",")){
+    const firstArtist=artist.split(",")[0].trim();
+    return artistSupport[firstArtist] || null;
   }
 
-  else{
-
-    supportLink.style.display="none";
-    supportLink.removeAttribute("href");
-
-  }
-
+  return artistSupport[artist] || null;
 }
 
 
@@ -1284,12 +1238,11 @@ function getAllTracks(){
         features:item.features || [],
         audio:item.audio,
         artwork:item.artwork,
-        album:null
+        album:null,
+        noSupport:item.noSupport || false
       });
 
-    }
-
-    else{
+    }else{
 
       item.tracks.forEach(track=>{
 
@@ -1299,7 +1252,8 @@ function getAllTracks(){
           features:track.features || [],
           audio:track.audio,
           artwork:item.artwork,
-          album:item
+          album:item,
+          noSupport:false
         });
 
       });
@@ -1347,8 +1301,6 @@ function playSong(
 
   songInfo.classList.add("visible");
 
-  updateSupportLink(artist);
-
   drawWaveform();
 
   player.play().catch(()=>{});
@@ -1384,9 +1336,7 @@ function updateTrackHighlight(){
 function openAlbum(album){
 
   albumCover.src=album.artwork;
-
   albumTitle.textContent=album.title;
-
   albumArtist.textContent=album.artist;
 
   tracklist.innerHTML="";
@@ -1396,7 +1346,6 @@ function openAlbum(album){
     const button=document.createElement("button");
 
     button.className="track";
-
     button.dataset.index=index;
 
     const featureText=track.features.length
@@ -1468,18 +1417,14 @@ function openAlbum(album){
 
 
 /* =========================================================
-   SHUFFLE
+   RANDOM ALL
 ========================================================= */
 
 function shuffleArray(array){
 
   const shuffled=[...array];
 
-  for(
-    let i=shuffled.length-1;
-    i>0;
-    i--
-  ){
+  for(let i=shuffled.length-1;i>0;i--){
 
     const j=Math.floor(
       Math.random()*(i+1)
@@ -1499,10 +1444,6 @@ function shuffleArray(array){
 
 }
 
-
-/* =========================================================
-   RANDOM ALL
-========================================================= */
 
 function startRandomAll(){
 
@@ -1586,9 +1527,7 @@ shuffledLibrary.forEach(item=>{
 
       openAlbum(item);
 
-    }
-
-    else{
+    }else{
 
       playSong(
         item.title,
@@ -1618,15 +1557,9 @@ playButton.addEventListener("click",()=>{
   if(!currentSong)return;
 
   if(player.paused){
-
     player.play().catch(()=>{});
-
-  }
-
-  else{
-
+  }else{
     player.pause();
-
   }
 
 });
@@ -1709,7 +1642,7 @@ player.addEventListener(
     if(repeatMode)return;
 
 
-    /* RANDOM ALL */
+    /* RANDOM ALL QUEUE */
 
     if(
       randomQueue.length &&
@@ -1965,9 +1898,7 @@ function searchLibrary(query){
 
       }
 
-    }
-
-    else{
+    }else{
 
       item.tracks.forEach(
         (track,index)=>{
@@ -2088,11 +2019,9 @@ function searchLibrary(query){
 searchInput.addEventListener(
   "input",
   ()=>{
-
     searchLibrary(
       searchInput.value
     );
-
   }
 );
 
@@ -2117,12 +2046,9 @@ searchButton.addEventListener(
       );
 
       searchInput.value="";
-
       searchResults.innerHTML="";
 
-    }
-
-    else{
+    }else{
 
       searchWrap.classList.add(
         "visible"
