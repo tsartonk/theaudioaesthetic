@@ -76,11 +76,11 @@ body{
 
 .search-input{
   width:100%;
-  padding:9px 12px;
+  padding:10px 12px;
   border:1px solid #222;
   border-radius:2px;
   outline:none;
-  background:rgba(0,0,0,.92);
+  background:rgba(0,0,0,.94);
   color:#fff;
   font-family:inherit;
   font-size:12px;
@@ -132,7 +132,7 @@ body{
 
 .top-button{
   position:fixed;
-  top:18px;
+  top:17px;
   z-index:60;
   border:0;
   background:none;
@@ -140,7 +140,6 @@ body{
   cursor:pointer;
   opacity:.55;
   transition:opacity .2s ease,transform .2s ease;
-  padding:2px;
 }
 
 .top-button:hover{
@@ -149,16 +148,27 @@ body{
 }
 
 .search-button{
-  right:54px;
+  right:22px;
   font-size:22px;
   line-height:1;
 }
 
 .instagram-button{
-  right:20px;
-  font-size:18px;
-  line-height:1;
-  text-decoration:none;
+  right:58px;
+  width:20px;
+  height:20px;
+  padding:0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.instagram-button svg{
+  width:19px;
+  height:19px;
+  fill:none;
+  stroke:currentColor;
+  stroke-width:1.7;
 }
 
 /* =========================
@@ -391,24 +401,17 @@ body{
    SUPPORT
 ========================= */
 
-.support-button{
-  margin-top:22px;
+.support-link{
   display:inline-block;
+  margin-top:7px;
   color:#777;
-  font-size:10px;
+  font-size:9px;
   text-decoration:none;
-  border-bottom:1px solid #333;
-  padding-bottom:3px;
-  transition:color .2s ease,border-color .2s ease;
+  transition:color .2s ease;
 }
 
-.support-button:hover{
+.support-link:hover{
   color:#fff;
-  border-color:#fff;
-}
-
-.support-wrap{
-  text-align:center;
 }
 
 /* =========================
@@ -449,13 +452,14 @@ body{
   }
 
   .search-button{
-    top:14px;
-    right:50px;
+    top:13px;
+    right:14px;
+    font-size:22px;
   }
 
   .instagram-button{
     top:14px;
-    right:15px;
+    right:49px;
   }
 
   .search-wrap{
@@ -483,14 +487,6 @@ body{
 
 <main class="grid" id="musicGrid"></main>
 
-<!-- SEARCH -->
-
-<button
-  class="top-button search-button"
-  id="searchButton"
-  title="Search"
->⌕</button>
-
 <!-- INSTAGRAM -->
 
 <a
@@ -498,8 +494,24 @@ body{
   href="https://www.instagram.com/theaudioaesthetic"
   target="_blank"
   rel="noopener noreferrer"
-  title="Instagram"
->◎</a>
+  title="The Audio Aesthetic Instagram"
+  aria-label="The Audio Aesthetic Instagram"
+>
+  <svg viewBox="0 0 24 24">
+    <rect x="3.5" y="3.5" width="17" height="17" rx="5"></rect>
+    <circle cx="12" cy="12" r="4"></circle>
+    <circle cx="17.4" cy="6.7" r="1"></circle>
+  </svg>
+</a>
+
+<!-- SEARCH -->
+
+<button
+  class="top-button search-button"
+  id="searchButton"
+  title="Search"
+  aria-label="Search"
+>⌕</button>
 
 <div class="search-wrap" id="searchWrap">
 
@@ -531,6 +543,17 @@ body{
     class="song-artist"
     id="songArtist"
   ></p>
+
+  <a
+    class="support-link"
+    id="supportLink"
+    href="#"
+    target="_blank"
+    rel="noopener noreferrer"
+    style="display:none;"
+  >
+    support artist
+  </a>
 
 </div>
 
@@ -570,11 +593,6 @@ body{
     <div
       class="tracklist"
       id="tracklist"
-    ></div>
-
-    <div
-      class="support-wrap"
-      id="supportWrap"
     ></div>
 
   </div>
@@ -1106,8 +1124,7 @@ const library = [
     artist:"Jaź, Don'o",
     features:[],
     artwork:"https://media.theaudioaesthetic.com/artwork/MISSEDCALLS.jpg",
-    audio:"https://media.theaudioaesthetic.com/music/Jaz%CC%81%20%26%20Don'o%20-%20MISSEDCALLS.mp3",
-    support:false
+    audio:"https://media.theaudioaesthetic.com/music/Jaz%CC%81%20%26%20Don'o%20-%20MISSEDCALLS.mp3"
   },
 
   {
@@ -1123,7 +1140,7 @@ const library = [
 
 
 /* =========================================================
-   ARTIST SUPPORT LINKS
+   ARTIST SUPPORT
 ========================================================= */
 
 const artistSupport = {
@@ -1132,7 +1149,7 @@ const artistSupport = {
 
   "Don'o":"https://cash.app/$donohanks",
 
-  "Jaź":"https://cash.app/$JazHarris0197",
+  "Jaź":"https://cash.app/$jharris0197",
 
   "ToNk":"https://cash.app/$TheLionization",
 
@@ -1150,9 +1167,7 @@ const artistSupport = {
 const grid=document.getElementById("musicGrid");
 
 const player=document.createElement("audio");
-
 player.preload="metadata";
-
 document.body.appendChild(player);
 
 const playButton=document.getElementById("playButton");
@@ -1162,6 +1177,7 @@ const randomButton=document.getElementById("randomButton");
 const songInfo=document.getElementById("songInfo");
 const songTitle=document.getElementById("songTitle");
 const songArtist=document.getElementById("songArtist");
+const supportLink=document.getElementById("supportLink");
 
 const albumOverlay=document.getElementById("albumOverlay");
 const albumCover=document.getElementById("albumCover");
@@ -1169,7 +1185,6 @@ const albumTitle=document.getElementById("albumTitle");
 const albumArtist=document.getElementById("albumArtist");
 const tracklist=document.getElementById("tracklist");
 const closeAlbum=document.getElementById("closeAlbum");
-const supportWrap=document.getElementById("supportWrap");
 
 const searchButton=document.getElementById("searchButton");
 const searchWrap=document.getElementById("searchWrap");
@@ -1211,49 +1226,42 @@ function formatArtists(artist,features=[]){
 
 
 /* =========================================================
-   SUPPORT
+   SUPPORT LINK
 ========================================================= */
 
-function getSupportArtist(artist){
+function updateSupportLink(artist){
 
-  if(artist.includes(",")){
-    return artist.split(",")[0].trim();
+  const link=artistSupport[artist];
+
+  /*
+    Missed Calls is intentionally excluded.
+  */
+
+  if(
+    currentSong &&
+    currentSong.title==="Missed Calls" &&
+    currentSong.artist==="Jaź, Don'o"
+  ){
+
+    supportLink.style.display="none";
+    supportLink.removeAttribute("href");
+    return;
+
   }
 
-  if(artist.includes(" & ")){
-    return artist.split(" & ")[0].trim();
+  if(link){
+
+    supportLink.href=link;
+    supportLink.style.display="inline-block";
+
   }
 
-  return artist.trim();
+  else{
 
-}
+    supportLink.style.display="none";
+    supportLink.removeAttribute("href");
 
-
-function showSupport(artist,enabled=true){
-
-  supportWrap.innerHTML="";
-
-  if(!enabled)return;
-
-  const supportArtist=getSupportArtist(artist);
-
-  const link=artistSupport[supportArtist];
-
-  if(!link)return;
-
-  const button=document.createElement("a");
-
-  button.className="support-button";
-
-  button.href=link;
-
-  button.target="_blank";
-
-  button.rel="noopener noreferrer";
-
-  button.textContent="Support "+supportArtist;
-
-  supportWrap.appendChild(button);
+  }
 
 }
 
@@ -1276,8 +1284,7 @@ function getAllTracks(){
         features:item.features || [],
         audio:item.audio,
         artwork:item.artwork,
-        album:null,
-        support:item.support !== false
+        album:null
       });
 
     }
@@ -1292,8 +1299,7 @@ function getAllTracks(){
           features:track.features || [],
           audio:track.audio,
           artwork:item.artwork,
-          album:item,
-          support:true
+          album:item
         });
 
       });
@@ -1340,6 +1346,8 @@ function playSong(
     formatArtists(artist,features);
 
   songInfo.classList.add("visible");
+
+  updateSupportLink(artist);
 
   drawWaveform();
 
@@ -1452,8 +1460,6 @@ function openAlbum(album){
   }
 
 
-  showSupport(album.artist,true);
-
   albumOverlay.classList.add("visible");
 
   updateTrackHighlight();
@@ -1462,7 +1468,7 @@ function openAlbum(album){
 
 
 /* =========================================================
-   RANDOM ALL
+   SHUFFLE
 ========================================================= */
 
 function shuffleArray(array){
@@ -1475,10 +1481,9 @@ function shuffleArray(array){
     i--
   ){
 
-    const j=
-      Math.floor(
-        Math.random()*(i+1)
-      );
+    const j=Math.floor(
+      Math.random()*(i+1)
+    );
 
     [
       shuffled[i],
@@ -1494,6 +1499,10 @@ function shuffleArray(array){
 
 }
 
+
+/* =========================================================
+   RANDOM ALL
+========================================================= */
 
 function startRandomAll(){
 
@@ -1700,7 +1709,7 @@ player.addEventListener(
     if(repeatMode)return;
 
 
-    /* RANDOM ALL QUEUE */
+    /* RANDOM ALL */
 
     if(
       randomQueue.length &&
@@ -1742,7 +1751,6 @@ player.addEventListener(
       const nextIndex=
         currentTrackIndex+1;
 
-
       if(
         nextIndex<
         currentAlbum.tracks.length
@@ -1765,9 +1773,7 @@ player.addEventListener(
 
       }
 
-
       currentAlbum=null;
-
       currentTrackIndex=-1;
 
       updateTrackHighlight();
@@ -1820,14 +1826,12 @@ function drawWaveform(){
 
   if(!width || !height)return;
 
-
   ctx.clearRect(
     0,
     0,
     width,
     height
   );
-
 
   const bars=
     Math.floor(width/4);
@@ -1840,7 +1844,6 @@ function drawWaveform(){
       ? player.currentTime/
         player.duration
       : 0;
-
 
   for(let i=0;i<bars;i++){
 
@@ -1868,16 +1871,13 @@ function drawWaveform(){
         amplitude
       );
 
-
     const played=
       x/width<=progress;
-
 
     ctx.fillStyle=
       played
         ? "#fff"
         : "#333";
-
 
     ctx.fillRect(
       x,
@@ -1935,7 +1935,6 @@ function searchLibrary(query){
 
   if(!q)return;
 
-
   const results=[];
 
   library.forEach(item=>{
@@ -1950,7 +1949,6 @@ function searchLibrary(query){
           " "+
           (item.features||[]).join(" ")
         ).toLowerCase();
-
 
       if(searchable.includes(q)){
 
@@ -1984,7 +1982,6 @@ function searchLibrary(query){
               " "+
               item.title
             ).toLowerCase();
-
 
           if(searchable.includes(q)){
 
@@ -2036,7 +2033,6 @@ function searchLibrary(query){
 
     button.className=
       "search-result";
-
 
     button.innerHTML=`
 
@@ -2113,7 +2109,6 @@ searchButton.addEventListener(
       searchWrap.classList.contains(
         "visible"
       );
-
 
     if(visible){
 
