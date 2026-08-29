@@ -554,6 +554,15 @@ body{
     id="songArtist"
   ></p>
 
+  <a
+    class="support-button single-support-button"
+    id="singleSupport"
+    href=""
+    target="_blank"
+    rel="noopener noreferrer"
+    style="display:none;"
+  ></a>
+
 </div>
 
 <!-- ALBUM -->
@@ -1184,6 +1193,7 @@ const randomButton=document.getElementById("randomButton");
 const songInfo=document.getElementById("songInfo");
 const songTitle=document.getElementById("songTitle");
 const songArtist=document.getElementById("songArtist");
+const singleSupport=document.getElementById("singleSupport");
 
 const albumOverlay=document.getElementById("albumOverlay");
 const albumCover=document.getElementById("albumCover");
@@ -1360,6 +1370,47 @@ function playSong(
 
   songArtist.textContent=
     formatArtists(artist,features);
+
+  /* =========================
+     SINGLE SUPPORT LINK
+  ========================= */
+
+  singleSupport.style.display="none";
+  singleSupport.href="";
+  singleSupport.textContent="";
+
+  if(!album){
+
+    const supportArtist=
+      getSupportArtist(artist);
+
+    const link=
+      artistSupport[supportArtist];
+
+    const libraryItem=
+      library.find(item=>
+        item.type==="single" &&
+        item.title===title &&
+        item.artist===artist
+      );
+
+    const supportEnabled=
+      !libraryItem ||
+      libraryItem.support !== false;
+
+    if(link && supportEnabled){
+
+      singleSupport.href=link;
+
+      singleSupport.textContent=
+        "Support "+supportArtist;
+
+      singleSupport.style.display=
+        "inline-block";
+
+    }
+
+  }
 
   songInfo.classList.add("visible");
 
@@ -2209,5 +2260,4 @@ closeAlbum.addEventListener(
 
 </body>
 </html>
-
 ```
