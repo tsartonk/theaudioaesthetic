@@ -1,4 +1,3 @@
-```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -1144,6 +1143,116 @@ const library = [
     features:[],
     artwork:"https://media.theaudioaesthetic.com/artwork/KICKINSHIT.jpg",
     audio:"https://media.theaudioaesthetic.com/music/Longmoney%20Pierre%20-%20KICKINSHIT.mp3"
+  },
+
+  /* =========================================================
+     NEW INSTALLMENTS
+========================================================= */
+
+  {
+    type:"single",
+    title:"DLSR",
+    artist:"Andre Austin",
+    features:[],
+    artwork:"https://media.theaudioaesthetic.com/artwork/DLSR.jpg",
+    audio:"https://media.theaudioaesthetic.com/music/ANDRE%20AUSTIN%20-%20DLSR%20(SKYLAB%20MIX%201).mp3"
+  },
+
+  {
+    type:"single",
+    title:"Stereo",
+    artist:"Fat Matt",
+    features:[],
+    artwork:"https://media.theaudioaesthetic.com/artwork/STEREO.jpg",
+    audio:"https://media.theaudioaesthetic.com/music/FatMatt%20-%20Stereo%20-%20RM5.mp3"
+  },
+
+  {
+    type:"album",
+    title:"From The Soul",
+    artist:"Dre Da Gemini",
+    artwork:"https://media.theaudioaesthetic.com/artwork/FROMTHESOUL.jpg",
+    tracks:[
+      {
+        title:"The Get Back",
+        features:["Dom Texas","AG3"],
+        audio:"https://media.theaudioaesthetic.com/music/FromTheSoul/01.%20THEGETBACK.mp3"
+      },
+      {
+        title:"Thassa Fact",
+        features:["Trevo Spark"],
+        audio:"https://media.theaudioaesthetic.com/music/FromTheSoul/02.%20THASSAFACT.mp3"
+      },
+      {
+        title:"Gem Talk",
+        features:[],
+        audio:"https://media.theaudioaesthetic.com/music/FromTheSoul/03.%20GEMTALK.mp3"
+      },
+      {
+        title:"Sorry",
+        features:[],
+        audio:"https://media.theaudioaesthetic.com/music/FromTheSoul/04.%20SORRY.mp3"
+      },
+      {
+        title:"Interlude (Lost Yo Mind)",
+        features:[],
+        audio:"https://media.theaudioaesthetic.com/music/FromTheSoul/05.%20INTERLUDE%3ALOST%20YO%20MIND.mp3"
+      },
+      {
+        title:"The Call",
+        features:[],
+        audio:"https://media.theaudioaesthetic.com/music/FromTheSoul/06.%20THECALL.mp3"
+      },
+      {
+        title:"Long As She",
+        features:[],
+        audio:"https://media.theaudioaesthetic.com/music/FromTheSoul/07.%20LONGASSHE.mp3"
+      },
+      {
+        title:"From The Soul",
+        features:[],
+        audio:"https://media.theaudioaesthetic.com/music/FromTheSoul/08.%20FROMTHESOUL.mp3"
+      }
+    ]
+  },
+
+  {
+    type:"album",
+    title:"Truth Be Told",
+    artist:"Dre Da Gemini",
+    artwork:"https://media.theaudioaesthetic.com/artwork/TRUTHBETOLD.jpg",
+    tracks:[
+      {
+        title:"Closed Mouth Playa",
+        features:[],
+        audio:"https://media.theaudioaesthetic.com/music/TruthBeTold/01.%20CLOSED%20MOUTH%20PLAYA.mp3"
+      },
+      {
+        title:"Shine",
+        features:[],
+        audio:"https://media.theaudioaesthetic.com/music/TruthBeTold/02.%20SHINE.mp3"
+      },
+      {
+        title:"Ya Heard",
+        features:["AG3"],
+        audio:"https://media.theaudioaesthetic.com/music/TruthBeTold/03.%20YA%20HEARD(feat.AG3).mp3"
+      },
+      {
+        title:"On My Soul",
+        features:[],
+        audio:"https://media.theaudioaesthetic.com/music/TruthBeTold/04.%20ONMYSOUL.mp3"
+      },
+      {
+        title:"All I Have",
+        features:[],
+        audio:"https://media.theaudioaesthetic.com/music/TruthBeTold/05.%20ALLIHAVE.mp3"
+      },
+      {
+        title:"Truth Be Told",
+        features:[],
+        audio:"https://media.theaudioaesthetic.com/music/TruthBeTold/06.%20TRUTHBETOLD.mp3"
+      }
+    ]
   }
 
 ];
@@ -1366,10 +1475,6 @@ function playSong(
 
   songArtist.textContent=
     formatArtists(artist,features);
-
-  /* =========================
-     SINGLE SUPPORT LINK
-  ========================= */
 
   singleSupport.style.display="none";
   singleSupport.href="";
@@ -2255,4 +2360,3 @@ closeAlbum.addEventListener(
 
 </body>
 </html>
-```
